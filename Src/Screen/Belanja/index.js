@@ -196,7 +196,11 @@ export class Belanja extends Component {
               {this.state.data.map((val, key) => {
                 return (
                   <View key={key}>
-                    <TouchableOpacity style={styles.boksProduk}>
+                    <TouchableOpacity
+                      style={styles.boksProduk}
+                      onPress={() =>
+                        this.props.navigation.navigate('Detail', {item: val})
+                      }>
                       <View style={styles.viewImage}>
                         <Image
                           source={{uri: val.gambar}}

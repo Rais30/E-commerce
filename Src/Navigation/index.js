@@ -12,6 +12,8 @@ import Keranjang from '../Screen/Keranjang';
 import Message from '../Screen/Message';
 import Splas from '../Screen/SplasScreen';
 import AddProduct from '../Screen/TambahProduk';
+import Kategori from '../Screen/Kategori';
+import Detail from '../Screen/DetailProduk';
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -67,6 +69,8 @@ class Navigation extends React.Component {
           <Stack.Screen name="Keranjang" component={Keranjang} />
           <Stack.Screen name="Message" component={Message} />
           <Stack.Screen name="AddProduct" component={AddProduct} />
+          <Stack.Screen name="kategori" component={Kategori} />
+          <Stack.Screen name="Detail" component={Detail} />
         </Stack.Navigator>
       </NavigationContainer>
     );

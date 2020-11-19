@@ -8,7 +8,9 @@ import {
   ActivityIndicator,
   Image,
 } from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 import ImagePicker from 'react-native-image-picker';
+import styles from '../../Components/BoxTambahProduk';
 
 class AddProduct extends Component {
   constructor() {
@@ -68,7 +70,7 @@ class AddProduct extends Component {
             console.log(resJson.token),
           );
           this.setState({loading: false});
-          this.props.navigation.navigate('Login');
+          this.props.navigation.navigate('Home');
         } else {
           this.setState({loading: false});
           console.log('error');
@@ -120,104 +122,105 @@ class AddProduct extends Component {
   }
   render() {
     return (
-      <View style={{flex: 1}}>
-        <View
-          style={{
-            backgroundColor: 'white',
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: 100,
-            height: 100,
-            borderRadius: 50,
-            alignSelf: 'center',
-            top: 50,
-          }}>
-          <TouchableOpacity
-            style={{justifyContent: 'center', alignItems: 'center'}}
-            onPress={() => this.handleChoosePhoto()}>
-            {this.state.foto !== '' ? (
-              <Image
-                source={{uri: this.state.foto.uri}}
-                style={{
-                  width: 100,
-                  height: 100,
-                  borderRadius: 50,
-                }}
-              />
-            ) : (
-              <View
-                style={{
-                  width: 100,
-                  height: 100,
-                  backgroundColor: 'gray',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderRadius: 10,
-                  marginVertical: 15,
-                }}>
-                <Text style={{color: 'white', textAlign: 'center'}}>
-                  Upload an Image
-                </Text>
-              </View>
-            )}
-          </TouchableOpacity>
+      <View style={styles.viewUtama}>
+        <View style={styles.viewHeader}>
+          <Text style={styles.taksHeader}> Tambah Barang </Text>
         </View>
-        <Text> Barang Baru </Text>
-        <TextInput
-          placeholder="Nama Barang"
-          value={this.state.namaBarang}
-          onChangeText={(teks) => this.setState({nama: teks})}
-        />
-        <TextInput
-          placeholder="Harga"
-          value={this.state.barang}
-          onChangeText={(teks) => this.setState({harga: teks})}
-        />
-        <TextInput
-          placeholder="Ukuran"
-          value={this.state.barang}
-          onChangeText={(teks) => this.setState({ukuran: teks})}
-        />
-        <TextInput
-          placeholder="Stok"
-          value={this.state.barang}
-          onChangeText={(teks) => this.setState({stok: teks})}
-        />
-        <TextInput
-          placeholder="Berat"
-          value={this.state.barang}
-          onChangeText={(teks) => this.setState({berat: teks})}
-        />
-        <TextInput
-          placeholder="Descripsi"
-          value={this.state.barang}
-          onChangeText={(teks) => this.setState({descripsi: teks})}
-        />
-        <TextInput
-          placeholder="Kategori"
-          value={this.state.barang}
-          onChangeText={(teks) => this.setState({tag_id: teks})}
-        />
-        <TouchableOpacity
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: '#2f83f9',
-            borderRadius: 25,
-            width: '50%',
-            alignSelf: 'center',
-            marginTop: 40,
-            height: 40,
-          }}
-          onPress={() => this.TambahBarang()}>
-          {this.state.loading ? (
-            <ActivityIndicator size={25} color="red" />
-          ) : (
-            <Text style={{fontSize: 17, fontWeight: 'bold', color: '#fcf8f8'}}>
-              Tambah Produk
-            </Text>
-          )}
-        </TouchableOpacity>
+        <ScrollView style={{flex: 1, width: '100%', height: 800}}>
+          <View style={styles.viewText}>
+            <View style={styles.viewFoto}>
+              <TouchableOpacity
+                style={{justifyContent: 'center', alignItems: 'center'}}
+                onPress={() => this.handleChoosePhoto()}>
+                {this.state.foto !== '' ? (
+                  <Image
+                    source={{uri: this.state.foto.uri}}
+                    style={styles.Image}
+                  />
+                ) : (
+                  <View style={styles.textImage}>
+                    <Text style={{color: 'white', textAlign: 'center'}}>
+                      Upload an Image
+                    </Text>
+                  </View>
+                )}
+              </TouchableOpacity>
+            </View>
+            <View style={styles.viewInput}>
+              <Text> Nama Barang :</Text>
+              <View style={styles.boxInput}>
+                <TextInput
+                  placeholder="Barang"
+                  value={this.state.namaBarang}
+                  onChangeText={(teks) => this.setState({nama: teks})}
+                />
+              </View>
+              <Text> Harga Barang :</Text>
+              <View style={styles.boxInput}>
+                <TextInput
+                  placeholder="Harga"
+                  keyboardType="number-pad"
+                  value={this.state.barang}
+                  onChangeText={(teks) => this.setState({harga: teks})}
+                />
+              </View>
+              <Text> Ukuran Barang " Cm " : </Text>
+              <View style={styles.boxInput}>
+                <TextInput
+                  keyboardType="number-pad"
+                  placeholder="Ukuran"
+                  value={this.state.barang}
+                  onChangeText={(teks) => this.setState({ukuran: teks})}
+                />
+              </View>
+              <Text> Stok Brang :</Text>
+              <View style={styles.boxInput}>
+                <TextInput
+                  keyboardType="number-pad"
+                  placeholder="Stok"
+                  value={this.state.barang}
+                  onChangeText={(teks) => this.setState({stok: teks})}
+                />
+              </View>
+              <Text> Berat Barang " Kg ":</Text>
+              <View style={styles.boxInput}>
+                <TextInput
+                  keyboardType="number-pad"
+                  placeholder="Berat"
+                  value={this.state.barang}
+                  onChangeText={(teks) => this.setState({berat: teks})}
+                />
+              </View>
+              <Text> Descripsi Barang :</Text>
+              <View style={styles.boxInput}>
+                <TextInput
+                  placeholder="Descripsi"
+                  value={this.state.barang}
+                  onChangeText={(teks) => this.setState({descripsi: teks})}
+                />
+              </View>
+              <Text> Kategori Barang :</Text>
+              <View style={styles.boxInput}>
+                <TextInput
+                  placeholder="Kategori"
+                  value={this.state.barang}
+                  onChangeText={(teks) => this.setState({tag_id: teks})}
+                />
+              </View>
+            </View>
+            <View>
+              <TouchableOpacity
+                style={styles.klikTambah}
+                onPress={() => this.TambahBarang()}>
+                {this.state.loading ? (
+                  <ActivityIndicator size={25} color="red" />
+                ) : (
+                  <Text style={styles.textTambah}>Tambah Produk</Text>
+                )}
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ScrollView>
       </View>
     );
   }
