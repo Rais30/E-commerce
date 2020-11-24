@@ -83,7 +83,7 @@ export default StyleSheet.create({
   },
   backView2: {
     width: '95%',
-    height: 300,
+    height: 600,
     alignSelf: 'center',
     backgroundColor: '#87CEFA',
     borderRadius: 15,
@@ -109,5 +109,47 @@ export default StyleSheet.create({
   },
   dataText: {
     paddingLeft: 5,
+  },
+  boxTampildata: {
+    // backgroundColor: 'red',
+    width: '100%',
+    height: '100%',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    flex: 1,
+  },
+  boksProduk: {
+    width: 170,
+    height: 270,
+    backgroundColor: 'white',
+    marginLeft: 20,
+    marginTop: 10,
+    elevation: 5,
+    borderRadius: 10,
+    paddingTop: 5,
+    paddingTop: 5,
+    marginBottom: 5,
+  },
+  image: {
+    width: 150,
+    height: 150,
+  },
+  viewImage: {
+    alignItems: 'center',
+  },
+  viewTeks: {
+    paddingLeft: 7,
+    // justifyContent: 'space-around',
+  },
+  dataProduk: {
+    backgroundColor: 'white',
+    width: 340,
+    height: 360,
+    // alignItems: 'center',
+    paddingLeft: 5,
+    borderRadius: 5,
+    // flexDirection: 'row',
+    elevation: 5,
+    marginTop: 10,
   },
 });

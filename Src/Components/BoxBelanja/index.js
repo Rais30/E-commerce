@@ -44,7 +44,7 @@ export default StyleSheet.create({
     fontSize: 15,
   },
   boxTampildata: {
-    backgroundColor: 'red',
+    // backgroundColor: 'red',
     width: '100%',
     height: '100%',
     flexDirection: 'row',

@@ -6,19 +6,21 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Swiper from 'react-native-swiper';
 import styles from '../../Components/BoxBelanja';
-import {ActivityIndicator} from 'react-native-paper';
 
 export class Belanja extends Component {
-  state = {
-    data: [],
-    input: '',
-    loading: false,
-  };
-
+  constructor() {
+    super();
+    this.state = {
+      data: [],
+      input: '',
+      loading: false,
+    };
+  }
   componentDidMount() {
     this.belanja();
   }
@@ -42,6 +44,10 @@ export class Belanja extends Component {
         this.setState({loading: false});
       });
   };
+
+  kategari() {
+    this.props.navigation.navigate('Kategori');
+  }
 
   render() {
     return (
@@ -119,7 +125,9 @@ export class Belanja extends Component {
                   flexDirection: 'row',
                 }}>
                 <View>
-                  <TouchableOpacity style={styles.kategari}>
+                  <TouchableOpacity
+                    style={styles.kategari}
+                    onPress={() => this.kategari()}>
                     <Image
                       source={require('../../Assets/icons8-book-48.png')}
                       style={styles.imageKatagori}
@@ -130,7 +138,9 @@ export class Belanja extends Component {
                   </View>
                 </View>
                 <View>
-                  <TouchableOpacity style={styles.kategari}>
+                  <TouchableOpacity
+                    style={styles.kategari}
+                    onPress={() => this.kategari()}>
                     <Image
                       source={require('../../Assets/personal-care-512.png')}
                       style={styles.imageKatagori}
@@ -141,7 +151,9 @@ export class Belanja extends Component {
                   </View>
                 </View>
                 <View>
-                  <TouchableOpacity style={styles.kategari}>
+                  <TouchableOpacity
+                    style={styles.kategari}
+                    onPress={() => this.kategari()}>
                     <Image
                       source={require('../../Assets/icons8-refreshments-48.png')}
                       style={styles.imageKatagori}
@@ -152,7 +164,9 @@ export class Belanja extends Component {
                   </View>
                 </View>
                 <View>
-                  <TouchableOpacity style={styles.kategari}>
+                  <TouchableOpacity
+                    style={styles.kategari}
+                    onPress={() => this.kategari()}>
                     <Image
                       source={require('../../Assets/icons8-desk-48.png')}
                       style={styles.imageKatagori}
@@ -163,7 +177,9 @@ export class Belanja extends Component {
                   </View>
                 </View>
                 <View>
-                  <TouchableOpacity style={styles.kategari}>
+                  <TouchableOpacity
+                    style={styles.kategari}
+                    onPress={() => this.kategari()}>
                     <Image
                       source={require('../../Assets/icons8-tv-on-48.png')}
                       style={styles.imageKatagori}
@@ -174,7 +190,9 @@ export class Belanja extends Component {
                   </View>
                 </View>
                 <View>
-                  <TouchableOpacity style={styles.kategari}>
+                  <TouchableOpacity
+                    style={styles.kategari}
+                    onPress={() => this.kategari()}>
                     <Image
                       source={require('../../Assets/icons8-fashion-trend-48.png')}
                       style={styles.imageKatagori}

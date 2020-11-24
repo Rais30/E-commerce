@@ -14,6 +14,8 @@ import Splas from '../Screen/SplasScreen';
 import AddProduct from '../Screen/TambahProduk';
 import Kategori from '../Screen/Kategori';
 import Detail from '../Screen/DetailProduk';
+import EditProduk from '../Screen/EditProduk';
+import EditProfil from '../Screen/EditProfil';
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -71,6 +73,8 @@ class Navigation extends React.Component {
           <Stack.Screen name="AddProduct" component={AddProduct} />
           <Stack.Screen name="kategori" component={Kategori} />
           <Stack.Screen name="Detail" component={Detail} />
+          <Stack.Screen name="Edit" component={EditProduk} />
+          <Stack.Screen name="EditProfil" component={EditProfil} />
         </Stack.Navigator>
       </NavigationContainer>
     );

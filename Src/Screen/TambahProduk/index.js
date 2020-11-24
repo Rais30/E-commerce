@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Image,
+  ToastAndroid,
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import ImagePicker from 'react-native-image-picker';
@@ -62,7 +63,8 @@ class AddProduct extends Component {
       .then((respon) => respon.json())
       .then((resJson) => {
         console.log(resJson);
-        if (resJson.token) {
+        const {status} = resJson;
+        if (status == 'success') {
           ToastAndroid.show(
             ' Berasil',
             ToastAndroid.SHORT,
