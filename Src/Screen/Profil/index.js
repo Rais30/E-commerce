@@ -1,6 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {Component} from 'react';
-import {Text, View, Button, TouchableOpacity, Image} from 'react-native';
+import {
+  Text,
+  View,
+  Button,
+  TouchableOpacity,
+  Image,
+  ActivityIndicator,
+} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from '../../Components/BoxProfil';
@@ -13,12 +20,13 @@ class Profil extends Component {
       photo: '',
       data: '',
       produk: [],
+      loading: false,
     };
   }
 
   Profil() {
     const url = 'https://api-shop1.herokuapp.com/api/member';
-
+    this.setState({loading: true});
     fetch(url, {
       method: 'GET',
       headers: {
@@ -30,11 +38,12 @@ class Profil extends Component {
       .then((respon) => respon.json())
       .then((resJson) => {
         this.setState({data: resJson.user[0]});
-        this.setState({produk: resJson.data});
+        this.setState({produk: resJson.data, loading: false});
         console.log(this.state.produk);
       })
       .catch((error) => {
         console.log('error is' + error);
+        this.setState({loading: false});
       });
   }
   handleChoosePhoto = () => {
@@ -151,32 +160,38 @@ class Profil extends Component {
                       <Text>Toko Saya</Text>
                     </View>
                     <ScrollView horizontal>
-                      <View style={styles.boxTampildata}>
-                        {this.state.produk.map((val, key) => {
-                          return (
-                            <View key={key}>
-                              <TouchableOpacity
-                                style={styles.boksProduk}
-                                onPress={() =>
-                                  this.props.navigation.navigate('Edit', {
-                                    item: val,
-                                  })
-                                }>
-                                <View style={styles.viewImage}>
-                                  <Image
-                                    source={{uri: val.gambar}}
-                                    style={styles.image}
-                                  />
-                                </View>
-                                <View style={styles.viewTeks}>
-                                  <Text>{val.nama}</Text>
-                                  <Text>{'Rp ' + val.harga}</Text>
-                                </View>
-                              </TouchableOpacity>
-                            </View>
-                          );
-                        })}
-                      </View>
+                      {this.state.data == null ? (
+                        <View>
+                          <ActivityIndicator color="red" size={30} />
+                        </View>
+                      ) : (
+                        <View style={styles.boxTampildata}>
+                          {this.state.produk.map((val, key) => {
+                            return (
+                              <View key={key}>
+                                <TouchableOpacity
+                                  style={styles.boksProduk}
+                                  onPress={() =>
+                                    this.props.navigation.navigate('Detail', {
+                                      item: val,
+                                    })
+                                  }>
+                                  <View style={styles.viewImage}>
+                                    <Image
+                                      source={{uri: val.gambar}}
+                                      style={styles.image}
+                                    />
+                                  </View>
+                                  <View style={styles.viewTeks}>
+                                    <Text>{val.nama}</Text>
+                                    <Text>{'Rp ' + val.harga}</Text>
+                                  </View>
+                                </TouchableOpacity>
+                              </View>
+                            );
+                          })}
+                        </View>
+                      )}
                     </ScrollView>
                   </View>
                 </View>

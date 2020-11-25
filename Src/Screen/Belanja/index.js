@@ -129,19 +129,6 @@ export class Belanja extends Component {
                     style={styles.kategari}
                     onPress={() => this.kategari()}>
                     <Image
-                      source={require('../../Assets/icons8-book-48.png')}
-                      style={styles.imageKatagori}
-                    />
-                  </TouchableOpacity>
-                  <View style={styles.boksTeks}>
-                    <Text style={styles.textKategori}>Buku</Text>
-                  </View>
-                </View>
-                <View>
-                  <TouchableOpacity
-                    style={styles.kategari}
-                    onPress={() => this.kategari()}>
-                    <Image
                       source={require('../../Assets/personal-care-512.png')}
                       style={styles.imageKatagori}
                     />
@@ -168,19 +155,6 @@ export class Belanja extends Component {
                     style={styles.kategari}
                     onPress={() => this.kategari()}>
                     <Image
-                      source={require('../../Assets/icons8-desk-48.png')}
-                      style={styles.imageKatagori}
-                    />
-                  </TouchableOpacity>
-                  <View style={styles.boksTeks}>
-                    <Text style={styles.textKategori}>Perabot</Text>
-                  </View>
-                </View>
-                <View>
-                  <TouchableOpacity
-                    style={styles.kategari}
-                    onPress={() => this.kategari()}>
-                    <Image
                       source={require('../../Assets/icons8-tv-on-48.png')}
                       style={styles.imageKatagori}
                     />
@@ -189,23 +163,10 @@ export class Belanja extends Component {
                     <Text style={styles.textKategori}>Elektronik</Text>
                   </View>
                 </View>
-                <View>
-                  <TouchableOpacity
-                    style={styles.kategari}
-                    onPress={() => this.kategari()}>
-                    <Image
-                      source={require('../../Assets/icons8-fashion-trend-48.png')}
-                      style={styles.imageKatagori}
-                    />
-                  </TouchableOpacity>
-                  <View style={styles.boksTeks}>
-                    <Text style={styles.textKategori}>Fashion</Text>
-                  </View>
-                </View>
               </View>
             </View>
           </ScrollView>
-          {this.state.loading ? (
+          {this.state.data == null ? (
             <View>
               <ActivityIndicator color="red" size={30} />
             </View>

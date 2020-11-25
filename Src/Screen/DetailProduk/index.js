@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Modal,
+  ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from '../../Components/BoxDetail';
@@ -17,24 +18,51 @@ export class Detail extends Component {
     this.state = {
       data: [],
       token: '',
-      jumlah: 0,
+      jumlah_produk: 0,
       modal: false,
+      loading: false,
     };
-
     AsyncStorage.getItem('token').then((value) => {
       if (value != '') {
         this.setState({token: value, data: this.props.route.params.item});
-        console.log(this.state.data);
+        console.log(this.state.data.id);
       } else {
         console.log('token tidak ada');
       }
     });
   }
-  jumlah = () => {
-    this.setState({jumlah: this.state.jumlah + 1});
+  keranjang = () => {
+    const {jumlah_produk} = this.state;
+    const url = `https://api-shop1.herokuapp.com/api/keranjang/${this.state.data.id}`;
+    this.setState({loading: true});
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify({jumlah_produk: jumlah_produk}),
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.state.token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((resjson) => {
+        console.log(resjson);
+        const {status} = resjson;
+        if (status == 'success') {
+          this.setState({loading: false});
+          this.props.navigation.replace('Home', {screen: 'Keranjang'});
+        } else {
+          console.log('error');
+          this.setState({loading: false});
+        }
+      })
+      .catch((err) => console.log('Terjadi kesalahan. ' + err));
+  };
+  jumlah_produk = () => {
+    this.setState({jumlah_produk: this.state.jumlah_produk + 1});
   };
   kurang = () => {
-    this.setState({jumlah: this.state.jumlah - 1});
+    this.setState({jumlah_produk: this.state.jumlah_produk - 1});
   };
 
   render() {
@@ -101,10 +129,14 @@ export class Detail extends Component {
                 </View>
                 <View>
                   <View style={{marginTop: 10}}>
-                    <Icon name="add" size={25} onPress={() => this.jumlah()} />
+                    <Icon
+                      name="add"
+                      size={25}
+                      onPress={() => this.jumlah_produk()}
+                    />
                   </View>
                   <View style={{marginTop: 10}}>
-                    <Text>{this.state.jumlah}</Text>
+                    <Text>{this.state.jumlah_produk}</Text>
                   </View>
                   <View style={{marginTop: 10}}>
                     <Icon
@@ -124,7 +156,7 @@ export class Detail extends Component {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}
-                  onPress={() => this.props.navigation.navigate()}>
+                  onPress={() => this.keranjang()}>
                   <Icon name="add-shopping-cart" size={30} />
                 </TouchableOpacity>
               </View>

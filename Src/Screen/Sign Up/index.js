@@ -3,9 +3,9 @@ import {
   Text,
   View,
   TextInput,
-  ToastAndroid,
   Image,
   ActivityIndicator,
+  ToastAndroid,
 } from 'react-native';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import styles from '../../Components/BoxSignUp';

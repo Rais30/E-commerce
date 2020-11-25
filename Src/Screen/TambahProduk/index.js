@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Image,
-  ToastAndroid,
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import ImagePicker from 'react-native-image-picker';
@@ -23,67 +22,57 @@ class AddProduct extends Component {
       stok: '',
       berat: '',
       foto: '',
+      photo: '',
       descripsi: '',
       tag_id: '',
       token: '',
       loading: false,
     };
   }
-  TambahBarang = () => {
+
+  addData() {
     const {
       nama,
       harga,
       ukuran,
       stok,
-      berat,
-      foto,
+      photo,
       descripsi,
       tag_id,
+      berat,
     } = this.state;
-    const url = 'https://api-shop1.herokuapp.com/api/member';
-    const data = {
-      nama: nama,
-      harga: harga,
-      ukuran: ukuran,
-      stok: stok,
-      berat: berat,
-      descripsi: descripsi,
-      tag_id: tag_id,
-    };
-    this.setState({loading: true});
-
-    fetch(url, {
-      method: 'POST',
-      body: this.createFormData(foto, data),
-      headers: {
-        Accept: 'application/json',
-        Authorization: `Bearer ${this.state.token}`,
-      },
-    })
-      .then((respon) => respon.json())
-      .then((resJson) => {
-        console.log(resJson);
-        const {status} = resJson;
-        if (status == 'success') {
-          ToastAndroid.show(
-            ' Berasil',
-            ToastAndroid.SHORT,
-            ToastAndroid.CENTER,
-            console.log(resJson.token),
-          );
-          this.setState({loading: false});
-          this.props.navigation.navigate('Home');
-        } else {
-          this.setState({loading: false});
-          console.log('error');
-          alert('error');
-        }
+    if (nama && harga && ukuran && stok && photo && descripsi && tag_id != '') {
+      const todo = {
+        nama: nama,
+        harga: harga,
+        ukuran: ukuran,
+        stok: stok,
+        descripsi: descripsi,
+        tag_id: tag_id,
+        berat: berat,
+      };
+      fetch('https://api-shop1.herokuapp.com/api/member', {
+        method: 'POST',
+        body: this.createFormData(photo, todo),
+        headers: {
+          Authorization: `Bearer ${this.state.token}`,
+        },
       })
-      .catch((error) => {
-        this.setState({loading: false});
-        console.log('error is' + error);
-      });
-  };
+        .then((response) => response.json())
+        .then((response) => {
+          if (response) console.log('Upload succes.', response);
+          alert('Data ditambahkan!');
+          this.props.navigation.replace('Home', {screen: 'Profil'});
+        })
+        .catch((error) => {
+          console.log('Upload error', error);
+          alert('Gagal ditambahkan');
+        });
+    } else {
+      alert('Isi dengan benar');
+    }
+  }
+
   createFormData = (photo, body) => {
     const data = new FormData();
 
@@ -108,7 +97,8 @@ class AddProduct extends Component {
     };
     ImagePicker.launchImageLibrary(options, (response) => {
       if (response.uri) {
-        this.setState({foto: response});
+        this.setState({photo: response});
+        console.log(this.state.photo);
       }
     });
   };
@@ -116,7 +106,7 @@ class AddProduct extends Component {
     AsyncStorage.getItem('token').then((token) => {
       if (token != null) {
         this.setState({token: token});
-        this.TambahBarang();
+        console.log('token ada');
       } else {
         console.log('token tidak ada');
       }
@@ -134,9 +124,9 @@ class AddProduct extends Component {
               <TouchableOpacity
                 style={{justifyContent: 'center', alignItems: 'center'}}
                 onPress={() => this.handleChoosePhoto()}>
-                {this.state.foto !== '' ? (
+                {this.state.photo !== '' ? (
                   <Image
-                    source={{uri: this.state.foto.uri}}
+                    source={{uri: this.state.photo.uri}}
                     style={styles.Image}
                   />
                 ) : (
@@ -153,7 +143,6 @@ class AddProduct extends Component {
               <View style={styles.boxInput}>
                 <TextInput
                   placeholder="Barang"
-                  value={this.state.namaBarang}
                   onChangeText={(teks) => this.setState({nama: teks})}
                 />
               </View>
@@ -162,7 +151,6 @@ class AddProduct extends Component {
                 <TextInput
                   placeholder="Harga"
                   keyboardType="number-pad"
-                  value={this.state.barang}
                   onChangeText={(teks) => this.setState({harga: teks})}
                 />
               </View>
@@ -171,7 +159,6 @@ class AddProduct extends Component {
                 <TextInput
                   keyboardType="number-pad"
                   placeholder="Ukuran"
-                  value={this.state.barang}
                   onChangeText={(teks) => this.setState({ukuran: teks})}
                 />
               </View>
@@ -180,7 +167,6 @@ class AddProduct extends Component {
                 <TextInput
                   keyboardType="number-pad"
                   placeholder="Stok"
-                  value={this.state.barang}
                   onChangeText={(teks) => this.setState({stok: teks})}
                 />
               </View>
@@ -189,7 +175,6 @@ class AddProduct extends Component {
                 <TextInput
                   keyboardType="number-pad"
                   placeholder="Berat"
-                  value={this.state.barang}
                   onChangeText={(teks) => this.setState({berat: teks})}
                 />
               </View>
@@ -197,7 +182,6 @@ class AddProduct extends Component {
               <View style={styles.boxInput}>
                 <TextInput
                   placeholder="Descripsi"
-                  value={this.state.barang}
                   onChangeText={(teks) => this.setState({descripsi: teks})}
                 />
               </View>
@@ -205,7 +189,6 @@ class AddProduct extends Component {
               <View style={styles.boxInput}>
                 <TextInput
                   placeholder="Kategori"
-                  value={this.state.barang}
                   onChangeText={(teks) => this.setState({tag_id: teks})}
                 />
               </View>
@@ -213,7 +196,7 @@ class AddProduct extends Component {
             <View>
               <TouchableOpacity
                 style={styles.klikTambah}
-                onPress={() => this.TambahBarang()}>
+                onPress={() => this.addData()}>
                 {this.state.loading ? (
                   <ActivityIndicator size={25} color="red" />
                 ) : (
