@@ -26,14 +26,14 @@ class Keranjang extends Component {
       .then((resJson) => {
         console.log(resJson.pesanan_detail);
         this.setState({data: resJson.pesanan_detail});
-        console.log(this.state.data);
+        console.log(this.state.data[0].id);
       })
       .catch((error) => {
         console.log('error is' + error);
       });
   };
   Delete = () => {
-    const url = 'https://api-shop1.herokuapp.com/api/keranjang/';
+    const url = `https://api-shop1.herokuapp.com/api/keranjang/${this.state.data[0].id}`;
     fetch(url, {
       method: 'DELETE',
       headers: {
@@ -69,7 +69,7 @@ class Keranjang extends Component {
           {this.state.data == null ? (
             <View style={{justifyContent: 'center', alignItems: 'center'}}>
               <Text> Data Tidak Tersedia </Text>
-              <Text> Harap Periksa Jaragan Anda </Text>
+              <Text> Harap Periksa Internet Anda </Text>
             </View>
           ) : (
             <View style={styles.boxTampildata}>
@@ -92,9 +92,19 @@ class Keranjang extends Component {
                         <Text>Harga : Rp {val.jumlah_harga_produk}</Text>
                       </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.Delete()}>
-                      <Icon name="delete" size={50} />
-                    </TouchableOpacity>
+                    <View>
+                      <TouchableOpacity onPress={() => this.Delete()}>
+                        <Icon name="delete" size={45} />
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() =>
+                          this.props.navigation.navigate('CheckOut', {
+                            data: this.state.data,
+                          })
+                        }>
+                        <Icon name="home" size={45} />
+                      </TouchableOpacity>
+                    </View>
                   </View>
                 );
               })}

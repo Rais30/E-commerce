@@ -1,5 +1,6 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {Component} from 'react';
-import {Text, View, Image, StyleSheet, TextInput, } from 'react-native';
+import {Text, View, Image, StyleSheet, TextInput} from 'react-native';
 
 export class CheckOut extends Component {
   constructor() {
@@ -11,12 +12,11 @@ export class CheckOut extends Component {
       loading: false,
     };
   }
+
   componentDidMount() {
     AsyncStorage.getItem('token').then((token) => {
       if (token != null) {
-        this.setState({token: token}, () => {
-          this.keranjang();
-        });
+        this.setState({token: token});
       } else {
         console.log('token tidak ada');
       }
@@ -26,7 +26,7 @@ export class CheckOut extends Component {
     return (
       <View>
         <View style={styles.boxTampildata}>
-          <View key={key}>
+          <View>
             <View style={styles.boksProduk}>
               <View style={styles.viewImage}>
                 <Image

@@ -172,7 +172,7 @@ class Profil extends Component {
                                 <TouchableOpacity
                                   style={styles.boksProduk}
                                   onPress={() =>
-                                    this.props.navigation.navigate('Detail', {
+                                    this.props.navigation.navigate('Edit', {
                                       item: val,
                                     })
                                   }>
