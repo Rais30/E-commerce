@@ -17,20 +17,46 @@ export class Detail extends Component {
     super();
     this.state = {
       data: [],
-      token: '',
       jumlah_produk: 0,
+      token: '',
       modal: false,
       loading: false,
     };
-    AsyncStorage.getItem('token').then((value) => {
-      if (value != '') {
-        this.setState({token: value, data: this.props.route.params.item});
-        console.log(this.state.data.id);
+  }
+
+  componentDidMount() {
+    AsyncStorage.getItem('token').then((token) => {
+      if (token != null) {
+        this.setState({token: token});
+        this.produk();
       } else {
         console.log('token tidak ada');
       }
     });
   }
+
+  produk = () => {
+    const id = this.props.route.params.item;
+    const url = `https://api-shop1.herokuapp.com/api/produk/${id}`;
+    this.setState({loading: true});
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        Accept: 'aplication/json',
+        'Content-Type': 'aplication/json',
+      },
+    })
+      .then((respon) => respon.json())
+      .then((resJson) => {
+        this.setState({data: resJson.data, loading: false});
+        console.log(resJson.data);
+      })
+      .catch((error) => {
+        console.log('error is' + error);
+        this.setState({loading: false});
+      });
+  };
+
   keranjang = () => {
     const {jumlah_produk} = this.state;
     const url = `https://api-shop1.herokuapp.com/api/keranjang/${this.state.data.id}`;
@@ -70,35 +96,32 @@ export class Detail extends Component {
       <View style={styles.viewUtama}>
         <ScrollView style={styles.viewUtama}>
           <View>
-            <Image
-              source={{uri: this.props.route.params.item.gambar}}
-              style={styles.gamabrProduk}
-            />
-          </View>
-          <View style={styles.viewText}>
-            <Text style={styles.textHarga}>
-              Rp {this.props.route.params.item.harga}
-            </Text>
-          </View>
-          <View style={styles.viewText}>
-            <Text style={{textAlign: 'right'}}>
-              Jumlah Barang :{this.props.route.params.item.stok}
-            </Text>
-          </View>
-          <View style={styles.viewText}>
-            <Text style={styles.textNama}>
-              {this.props.route.params.item.nama}
-            </Text>
-          </View>
-          <View style={styles.viewtextDetail}>
-            <View style={{marginBottom: 10}}>
-              <Text style={styles.textDetail}> Deskripsi </Text>
-            </View>
             <View>
-              <Text>{this.props.route.params.item.descripsi}</Text>
+              <Image
+                source={{uri: this.state.data.gambar}}
+                style={styles.gamabrProduk}
+              />
+            </View>
+            <View style={styles.viewText}>
+              <Text style={styles.textHarga}>Rp {this.state.data.harga}</Text>
+            </View>
+            <View style={styles.viewText}>
+              <Text style={{textAlign: 'right'}}>
+                Jumlah Barang :{this.state.data.stok}
+              </Text>
+            </View>
+            <View style={styles.viewText}>
+              <Text style={styles.textNama}>{this.state.data.nama}</Text>
+            </View>
+            <View style={styles.viewtextDetail}>
+              <View style={{marginBottom: 10}}>
+                <Text style={styles.textDetail}> Deskripsi </Text>
+              </View>
+              <View>
+                <Text>{this.state.data.descripsi}</Text>
+              </View>
             </View>
           </View>
-          <View></View>
         </ScrollView>
         <Modal
           animationType="slide"
@@ -124,7 +147,7 @@ export class Detail extends Component {
               <View style={{flexDirection: 'row'}}>
                 <View style={styles.viewText}>
                   <Text style={{fontSize: 17, color: 'red'}}>
-                    Rp {this.props.route.params.item.harga}
+                    Rp {this.state.data.harga}
                   </Text>
                 </View>
                 <View>

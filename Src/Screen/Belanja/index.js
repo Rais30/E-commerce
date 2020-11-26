@@ -129,19 +129,6 @@ export class Belanja extends Component {
                     style={styles.kategari}
                     onPress={() => this.kategari()}>
                     <Image
-                      source={require('../../Assets/personal-care-512.png')}
-                      style={styles.imageKatagori}
-                    />
-                  </TouchableOpacity>
-                  <View style={styles.boksTeks}>
-                    <Text style={styles.textKategori}>Perawatan</Text>
-                  </View>
-                </View>
-                <View>
-                  <TouchableOpacity
-                    style={styles.kategari}
-                    onPress={() => this.kategari()}>
-                    <Image
                       source={require('../../Assets/icons8-refreshments-48.png')}
                       style={styles.imageKatagori}
                     />
@@ -163,10 +150,24 @@ export class Belanja extends Component {
                     <Text style={styles.textKategori}>Elektronik</Text>
                   </View>
                 </View>
+
+                <View>
+                  <TouchableOpacity
+                    style={styles.kategari}
+                    onPress={() => this.kategari()}>
+                    <Image
+                      source={require('../../Assets/personal-care-512.png')}
+                      style={styles.imageKatagori}
+                    />
+                  </TouchableOpacity>
+                  <View style={styles.boksTeks}>
+                    <Text style={styles.textKategori}>Perawatan</Text>
+                  </View>
+                </View>
               </View>
             </View>
           </ScrollView>
-          {this.state.data == null ? (
+          {this.state.data == '' ? (
             <View>
               <ActivityIndicator color="red" size={30} />
             </View>
@@ -178,7 +179,7 @@ export class Belanja extends Component {
                     <TouchableOpacity
                       style={styles.boksProduk}
                       onPress={() =>
-                        this.props.navigation.navigate('Detail', {item: val})
+                        this.props.navigation.navigate('Detail', {item: val.id})
                       }>
                       <View style={styles.viewImage}>
                         <Image

@@ -148,6 +148,16 @@ class Profil extends Component {
                       <Text>Edit Profil </Text>
                     </View>
                   </View>
+                  <View style={styles.dataMember}>
+                    <Icon
+                      name="portrait"
+                      size={35}
+                      onPress={() => this.props.navigation.navigate('Konfir')}
+                    />
+                    <View style={styles.dataText}>
+                      <Text>Konfirmasi Pembelian </Text>
+                    </View>
+                  </View>
                   <View style={styles.dataProduk}>
                     <Icon
                       name="store"

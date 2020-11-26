@@ -30,7 +30,7 @@ class AddProduct extends Component {
     };
   }
 
-  addData() {
+  NewProduct() {
     const {
       nama,
       harga,
@@ -196,7 +196,7 @@ class AddProduct extends Component {
             <View>
               <TouchableOpacity
                 style={styles.klikTambah}
-                onPress={() => this.addData()}>
+                onPress={() => this.NewProduct()}>
                 {this.state.loading ? (
                   <ActivityIndicator size={25} color="red" />
                 ) : (

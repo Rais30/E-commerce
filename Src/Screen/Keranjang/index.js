@@ -98,9 +98,7 @@ class Keranjang extends Component {
                       </TouchableOpacity>
                       <TouchableOpacity
                         onPress={() =>
-                          this.props.navigation.navigate('CheckOut', {
-                            data: this.state.data,
-                          })
+                          this.props.navigation.navigate('CheckOut')
                         }>
                         <Icon name="home" size={45} />
                       </TouchableOpacity>

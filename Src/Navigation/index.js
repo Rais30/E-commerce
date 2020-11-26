@@ -17,6 +17,8 @@ import Detail from '../Screen/DetailProduk';
 import EditProduk from '../Screen/EditProduk';
 import EditProfil from '../Screen/EditProfil';
 import CheckOut from '../Screen/CheckOut';
+import Convirmation from '../Screen/Convirmation';
+import History from '../Screen/History';
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -34,6 +36,8 @@ function Home() {
             iconName = focused ? 'home' : 'home';
           } else if (route.name === 'Keranjang') {
             iconName = focused ? 'shopping-bag' : 'shopping-bag';
+          } else if (route.name === 'History') {
+            iconName = focused ? 'history' : 'history';
           } else if (route.name === 'Profil') {
             iconName = focused ? 'account-circle' : 'account-circle';
           }
@@ -50,6 +54,7 @@ function Home() {
         component={Belanja}
       />
       <Tab.Screen name="Keranjang" component={Keranjang} />
+      <Tab.Screen name="History" component={History} />
       <Tab.Screen name="Profil" component={Profil} />
     </Tab.Navigator>
   );
@@ -77,6 +82,8 @@ class Navigation extends React.Component {
           <Stack.Screen name="Edit" component={EditProduk} />
           <Stack.Screen name="EditProfil" component={EditProfil} />
           <Stack.Screen name="CheckOut" component={CheckOut} />
+          <Stack.Screen name="Konfir" component={Convirmation} />
+          <Stack.Screen name="History" component={History} />
         </Stack.Navigator>
       </NavigationContainer>
     );
