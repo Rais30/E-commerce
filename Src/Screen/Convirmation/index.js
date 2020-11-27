@@ -1,6 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {Component} from 'react';
-import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 
 export class Convirmation extends Component {
   constructor() {
@@ -13,14 +20,14 @@ export class Convirmation extends Component {
     AsyncStorage.getItem('token').then((token) => {
       if (token != null) {
         this.setState({token: token});
-        console.log('token ada');
-        this.konfir();
+        console.log(token);
+        this.getKonfir();
       } else {
         console.log('token tidak ada');
       }
     });
   }
-  konfir = () => {
+  getKonfir = () => {
     const url = 'https://api-shop1.herokuapp.com/api/konfirmasi';
     this.setState({loading: true});
     fetch(url, {
@@ -35,6 +42,29 @@ export class Convirmation extends Component {
       .then((resJson) => {
         console.log(resJson.pesanan_detail);
         this.setState({data: resJson.pesanan_detail, loading: false});
+        console.log(this.state.data[0].id);
+      })
+      .catch((error) => {
+        console.log(resJson);
+        console.log('error is' + error);
+        this.setState({loading: false});
+      });
+  };
+  konfir = () => {
+    const url = `https://api-shop1.herokuapp.com/api/konfirmasi/${this.state.data[0].id}`;
+    this.setState({loading: true});
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        Accept: 'aplication/json',
+        'Content-Type': 'aplication/json',
+        Authorization: `Bearer ${this.state.token}`,
+      },
+    })
+      .then((respon) => respon.json())
+      .then((resJson) => {
+        console.log(resJson);
+        this.getKonfir();
       })
       .catch((error) => {
         console.log('error is' + error);
@@ -65,6 +95,9 @@ export class Convirmation extends Component {
                       <Text>{val.nama}</Text>
                       <Text>{'Rp ' + val.harga}</Text>
                     </View>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => this.konfir()}>
+                    <Text>Convirmation</Text>
                   </TouchableOpacity>
                 </View>
               );

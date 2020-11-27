@@ -14,7 +14,7 @@ export default StyleSheet.create({
   },
   boksProduk: {
     width: 350,
-    height: 100,
+    height: 300,
     backgroundColor: 'white',
     marginLeft: 20,
     marginTop: 10,
@@ -27,7 +27,7 @@ export default StyleSheet.create({
     height: 80,
   },
   viewImage: {
-    justifyContent: 'center',
+    // justifyContent: 'center',
   },
   viewTeks: {
     paddingLeft: 7,

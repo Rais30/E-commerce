@@ -76,7 +76,7 @@ class Keranjang extends Component {
               {this.state.data.map((val, key) => {
                 return (
                   <View key={key} style={styles.boksProduk}>
-                    <TouchableOpacity style={{flexDirection: 'row'}}>
+                    <TouchableOpacity>
                       <View style={styles.viewImage}>
                         <Image
                           source={{uri: val.gambar}}
@@ -91,18 +91,18 @@ class Keranjang extends Component {
                         <Text>Jumlah : {val.jumlah_produk}</Text>
                         <Text>Harga : Rp {val.jumlah_harga_produk}</Text>
                       </View>
+                      <View style={{flexDirection: 'row'}}>
+                        <TouchableOpacity onPress={() => this.Delete()}>
+                          <Icon name="delete" size={45} />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() =>
+                            this.props.navigation.navigate('CheckOut')
+                          }>
+                          <Icon name="home" size={45} />
+                        </TouchableOpacity>
+                      </View>
                     </TouchableOpacity>
-                    <View>
-                      <TouchableOpacity onPress={() => this.Delete()}>
-                        <Icon name="delete" size={45} />
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        onPress={() =>
-                          this.props.navigation.navigate('CheckOut')
-                        }>
-                        <Icon name="home" size={45} />
-                      </TouchableOpacity>
-                    </View>
                   </View>
                 );
               })}

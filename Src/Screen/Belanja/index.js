@@ -19,6 +19,9 @@ export class Belanja extends Component {
       data: [],
       input: '',
       loading: false,
+      Makanan: '1',
+      Elektronik: '2',
+      perawatan: '3',
     };
   }
   componentDidMount() {
@@ -44,10 +47,6 @@ export class Belanja extends Component {
         this.setState({loading: false});
       });
   };
-
-  kategari() {
-    this.props.navigation.navigate('Kategori');
-  }
 
   render() {
     return (
@@ -127,7 +126,10 @@ export class Belanja extends Component {
                 <View>
                   <TouchableOpacity
                     style={styles.kategari}
-                    onPress={() => this.kategari()}>
+                    onPress={
+                      (() => this.navigation.navigate('Kategori'),
+                      {katergori: this.state.Makanan})
+                    }>
                     <Image
                       source={require('../../Assets/icons8-refreshments-48.png')}
                       style={styles.imageKatagori}
@@ -140,7 +142,10 @@ export class Belanja extends Component {
                 <View>
                   <TouchableOpacity
                     style={styles.kategari}
-                    onPress={() => this.kategari()}>
+                    onPress={
+                      (() => this.navigation.navigate('Kategori'),
+                      {kategori: this.state.Elektronik})
+                    }>
                     <Image
                       source={require('../../Assets/icons8-tv-on-48.png')}
                       style={styles.imageKatagori}
@@ -154,7 +159,10 @@ export class Belanja extends Component {
                 <View>
                   <TouchableOpacity
                     style={styles.kategari}
-                    onPress={() => this.kategari()}>
+                    onPress={
+                      (() => this.navigation.navigate('Kategori'),
+                      {kategori: this.state.perawatan})
+                    }>
                     <Image
                       source={require('../../Assets/personal-care-512.png')}
                       style={styles.imageKatagori}

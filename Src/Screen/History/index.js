@@ -7,6 +7,7 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
+  Button,
 } from 'react-native';
 
 export class History extends Component {
@@ -16,12 +17,13 @@ export class History extends Component {
       token: '',
       data: [],
       loading: false,
-      statusBarang:' Menunggu Konfirmasi '
+      statusBarang: '',
+      status: '',
     };
     AsyncStorage.getItem('token').then((token) => {
       if (token != null) {
         this.setState({token: token});
-        console.log('token ada');
+        console.log(token);
         this.history();
       } else {
         console.log('token tidak ada');
@@ -41,21 +43,47 @@ export class History extends Component {
     })
       .then((respon) => respon.json())
       .then((resJson) => {
-        console.log(resJson.pesanan_detail);
-        this.setState({data: resJson.pesanan_detail, loading: false});
+        console.log(resJson);
+        this.setState({
+          data: resJson.pesanan_detail,
+          loading: false,
+          status: resJson.pesanan_detail[0].status,
+        });
+        console.log(this.state.status);
+        console.log(this.state.data[0].id);
       })
       .catch((error) => {
         console.log('error is' + error);
         this.setState({loading: false});
       });
   };
-  // Status(){
-  //     return(
-  //         if (condition) {
-              
-  //         }
-  //     )
-  // }
+  konfir = () => {
+    const url = `https://api-shop1.herokuapp.com/api/konfirmasiPembeli/${this.data[0].id}`;
+    this.setState({loading: true});
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        Accept: 'aplication/json',
+        'Content-Type': 'aplication/json',
+        Authorization: `Bearer ${this.state.token}`,
+      },
+    })
+      .then((respon) => respon.json())
+      .then((resJson) => {
+        console.log(resJson);
+        this.setState({
+          data: resJson.pesanan_detail,
+          loading: false,
+          status: resJson.pesanan_detail[0].status,
+        });
+        console.log(this.state.status);
+      })
+      .catch((error) => {
+        console.log('error is' + error);
+        this.setState({loading: false});
+      });
+  };
+
   render() {
     return (
       <View>
@@ -81,6 +109,16 @@ export class History extends Component {
                       <Text>{'Rp ' + val.harga}</Text>
                     </View>
                   </TouchableOpacity>
+                  {this.state.status == 1 ? (
+                    <View>
+                      <Text> Pesanan Anda Sedang DIkemas </Text>
+                    </View>
+                  ) : (
+                    <View>
+                      <Text>Sedang Dalam Pengiriman</Text>
+                      <Button title="Diterima" onPress={() => this.konfir()} />
+                    </View>
+                  )}
                 </View>
               );
             })}
