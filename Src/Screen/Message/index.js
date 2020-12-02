@@ -110,38 +110,33 @@ export class Home extends Component {
           <Text style={styles.Tittel}> Pesan </Text>
         </View>
 
-        <ScrollView>
-          <View>
-            {this.state.token == '' ? (
-              <View>
-                <Text> Harap LogIn terlebih Dahulu</Text>
-                <View style={styles.loginRegister}>
-                  <View style={styles.BoxImage}>
-                    <Image
-                      source={require('../../Assets/Image.png')}
-                      style={{width: 70, height: 70}}
-                    />
-                  </View>
-                  <View style={styles.posisenLogin}>
-                    <View style={styles.boxLoginRegister}>
-                      <Button
-                        title="MASUK"
-                        onPress={() => this.props.navigation.navigate('Login')}
-                      />
-                    </View>
-                    <View style={styles.boxLoginRegister}>
-                      <Button
-                        title="DAFTAR"
-                        onPress={() =>
-                          this.props.navigation.navigate('Register')
-                        }
-                      />
-                    </View>
-                  </View>
-                </View>
+        {this.state.token == '' ? (
+          <View style={styles.loginRegister}>
+            <View style={styles.BoxImage}>
+              <Image
+                source={require('../../Assets/Image.png')}
+                style={{width: 70, height: 70}}
+              />
+            </View>
+            <View style={styles.posisenLogin}>
+              <View style={styles.boxLoginRegister}>
+                <Button
+                  title="MASUK"
+                  onPress={() => this.props.navigation.navigate('Login')}
+                />
               </View>
-            ) : (
-              <>
+              <View style={styles.boxLoginRegister}>
+                <Button
+                  title="DAFTAR"
+                  onPress={() => this.props.navigation.navigate('Register')}
+                />
+              </View>
+            </View>
+          </View>
+        ) : (
+          <View>
+            <ScrollView>
+              <View>
                 {this.state.data.length == 0 ? (
                   <View>
                     <ActivityIndicator color="red" size={30} />
@@ -165,23 +160,23 @@ export class Home extends Component {
                     })}
                   </View>
                 )}
-              </>
-            )}
+              </View>
+            </ScrollView>
+            <View style={styles.boxSend}>
+              <View style={styles.textMasuk}>
+                <TextInput
+                  style={{width: '75%'}}
+                  placeholder=" Pesan "
+                  value={this.state.input}
+                  onChangeText={(text) => this.setState({input: text})}
+                />
+              </View>
+              <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                <Icon name="send" size={35} onPress={() => this.message()} />
+              </View>
+            </View>
           </View>
-        </ScrollView>
-        <View style={styles.boxSend}>
-          <View style={styles.textMasuk}>
-            <TextInput
-              style={{width: '75%'}}
-              placeholder=" Pesan "
-              value={this.state.input}
-              onChangeText={(text) => this.setState({input: text})}
-            />
-          </View>
-          <View style={{alignItems: 'center', justifyContent: 'center'}}>
-            <Icon name="send" size={35} onPress={() => this.message()} />
-          </View>
-        </View>
+        )}
       </View>
     );
   }
