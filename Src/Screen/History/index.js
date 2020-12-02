@@ -20,6 +20,9 @@ export class History extends Component {
       loading: false,
       statusBarang: '',
     };
+  }
+
+  componentDidMount() {
     AsyncStorage.getItem('token').then((token) => {
       if (token != null) {
         this.setState({token: token});
@@ -30,7 +33,8 @@ export class History extends Component {
       }
     });
   }
-  history = () => {
+
+  history() {
     console.log('mulai historys');
     const url = 'https://api-shop1.herokuapp.com/api/history';
     this.setState({loading: true});
@@ -44,20 +48,19 @@ export class History extends Component {
     })
       .then((respon) => respon.json())
       .then((resJson) => {
-        console.log(resJson);
         this.setState({
           data: resJson.pesanan_detail,
-          loading: false,
         });
+        console.log(this.state.data[0].id);
       })
       .catch((error) => {
         console.log('error is' + error);
         this.setState({loading: false});
       });
-  };
+  }
   konfir = (id) => {
     const idH = id;
-    const url = `https://api-shop1.herokuapp.com/api/konfirmasiPembeli/${idH}`;
+    const url = `https://api-shop1.herokuapp.com/api/konfirmasiPembeli/${id}`;
     this.setState({loading: true});
     fetch(url, {
       method: 'GET',
@@ -70,7 +73,6 @@ export class History extends Component {
       .then((respon) => respon.json())
       .then((resJson) => {
         console.log(resJson);
-
         console.log(this.state.data.status);
       })
       .catch((error) => {
@@ -104,41 +106,100 @@ export class History extends Component {
 
   render() {
     return (
-      <ScrollView contentContainerStyle={styles.viewUtama}>
-        {this.state.data == null ? (
+      <View style={styles.Box}>
+        <View style={styles.header}>
+          <Text style={styles.Tittel}>History</Text>
+        </View>
+        <ScrollView contentContainerStyle={styles.viewUtama}>
           <View>
-            <ActivityIndicator color="red" size={30} />
-          </View>
-        ) : (
-          <>
-            {this.state.data.map((val, key) => {
-              return (
-                <View key={key}>
-                  <TouchableOpacity
-                    style={styles.boksProduk}
-                    onPress={() =>
-                      this.props.navigation.navigate('Detail', {item: val})
-                    }>
-                    <View style={styles.viewImage}>
-                      <Image source={{uri: val.gambar}} style={styles.image} />
+            {this.state.token == '' ? (
+              <View>
+                <Text> Harap LogIn terlebih Dahulu</Text>
+                <View style={styles.loginRegister}>
+                  <View style={styles.BoxImage}>
+                    <Image
+                      source={require('../../Assets/Image.png')}
+                      style={{width: 70, height: 70}}
+                    />
+                  </View>
+                  <View style={styles.posisenLogin}>
+                    <View style={styles.boxLoginRegister}>
+                      <Button
+                        title="MASUK"
+                        onPress={() => this.props.navigation.navigate('Login')}
+                      />
                     </View>
-                    <View style={styles.viewTeks}>
-                      <Text>{val.nama}</Text>
-                      <Text>{'Rp ' + val.harga}</Text>
+                    <View style={styles.boxLoginRegister}>
+                      <Button
+                        title="DAFTAR"
+                        onPress={() =>
+                          this.props.navigation.navigate('Register')
+                        }
+                      />
                     </View>
-                    <View>{this.statusBarang(val.status, val.id)}</View>
-                  </TouchableOpacity>
+                  </View>
                 </View>
-              );
-            })}
-          </>
-        )}
-      </ScrollView>
+              </View>
+            ) : (
+              <>
+                {this.state.data == '' ? (
+                  <View>
+                    <ActivityIndicator color="red" size={30} />
+                  </View>
+                ) : (
+                  <View style={styles.viewUtama}>
+                    {this.state.data.map((val, key) => {
+                      return (
+                        <View key={key}>
+                          <TouchableOpacity
+                            style={styles.boksProduk}
+                            onPress={() =>
+                              this.props.navigation.navigate('Detail', {
+                                item: val.pesanan_id,
+                              })
+                            }>
+                            <View style={styles.viewImage}>
+                              <Image
+                                source={{uri: val.gambar}}
+                                style={styles.image}
+                              />
+                            </View>
+                            <View style={styles.viewTeks}>
+                              <Text>{val.nama}</Text>
+                              <Text>{'Rp ' + val.harga}</Text>
+                            </View>
+                            <View>{this.statusBarang(val.status, val.id)}</View>
+                          </TouchableOpacity>
+                        </View>
+                      );
+                    })}
+                  </View>
+                )}
+              </>
+            )}
+          </View>
+        </ScrollView>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  Box: {
+    flex: 1,
+  },
+  header: {
+    width: '100%',
+    height: 50,
+    backgroundColor: '#1589FF',
+    elevation: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  Tittel: {
+    fontWeight: 'bold',
+    fontSize: 30,
+  },
   viewUtama: {
     flexGrow: 1,
     flexDirection: 'row',
@@ -171,6 +232,42 @@ const styles = StyleSheet.create({
   viewTeks: {
     paddingLeft: 7,
     // justifyContent: 'space-around',
+  },
+  loginRegister: {
+    width: '90%',
+    height: 190,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    marginTop: 90,
+    marginLeft: 18,
+    elevation: 10,
+  },
+  BoxImage: {
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    alignSelf: 'center',
+    top: 50,
+    borderWidth: 7,
+    borderColor: '#3462f9',
+    marginTop: -95,
+    borderWidth: 7,
+    margin: 5,
+  },
+  posisenLogin: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 80,
+  },
+  boxLoginRegister: {
+    width: '40%',
+    height: 50,
+    margin: 5,
+    borderRadius: 20,
   },
 });
 export default History;

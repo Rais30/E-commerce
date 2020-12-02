@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   ScrollView,
   Modal,
-  ActivityIndicator,
 } from 'react-native';
 import {Value} from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -23,6 +22,8 @@ export class Detail extends Component {
       modal: false,
       loading: false,
     };
+  }
+  componentDidMount() {
     AsyncStorage.getItem('token').then((token) => {
       if (token != null) {
         this.setState({token: token});
@@ -33,11 +34,10 @@ export class Detail extends Component {
       }
     });
   }
-
   produk = () => {
     const url =
       `https://api-shop1.herokuapp.com/api/produk/` +
-      this.props.route.params.item.id;
+      this.props.route.params.item;
     this.setState({loading: true});
     fetch(url, {
       method: 'GET',
@@ -57,9 +57,8 @@ export class Detail extends Component {
   };
 
   keranjang = () => {
-    const idh = this.props.route.params.item.id;
     const {jumlah_produk} = this.state;
-    const url = `https://api-shop1.herokuapp.com/api/keranjang/${idh}`;
+    const url = `https://api-shop1.herokuapp.com/api/keranjang/${this.props.route.params.item}`;
     this.setState({loading: true});
     fetch(url, {
       method: 'POST',
@@ -95,33 +94,39 @@ export class Detail extends Component {
     return (
       <View style={styles.viewUtama}>
         <ScrollView style={styles.viewUtama}>
-          <View>
+          {this.state.data == null ? (
             <View>
-              <Image
-                source={{uri: this.state.data.gambar}}
-                style={styles.gamabrProduk}
-              />
+              <Text>memuat</Text>
             </View>
-            <View style={styles.viewText}>
-              <Text style={styles.textHarga}>Rp {this.state.data.harga}</Text>
-            </View>
-            <View style={styles.viewText}>
-              <Text style={{textAlign: 'right'}}>
-                Jumlah Barang :{this.state.data.stok}
-              </Text>
-            </View>
-            <View style={styles.viewText}>
-              <Text style={styles.textNama}>{this.state.data.nama}</Text>
-            </View>
-            <View style={styles.viewtextDetail}>
-              <View style={{marginBottom: 10}}>
-                <Text style={styles.textDetail}> Deskripsi </Text>
-              </View>
+          ) : (
+            <View>
               <View>
-                <Text>{this.state.data.descripsi}</Text>
+                <Image
+                  source={{uri: this.state.data.gambar}}
+                  style={styles.gamabrProduk}
+                />
+              </View>
+              <View style={styles.viewText}>
+                <Text style={styles.textHarga}>Rp {this.state.data.harga}</Text>
+              </View>
+              <View style={styles.viewText}>
+                <Text style={{textAlign: 'right'}}>
+                  Jumlah Barang :{this.state.data.stok}
+                </Text>
+              </View>
+              <View style={styles.viewText}>
+                <Text style={styles.textNama}>{this.state.data.nama}</Text>
+              </View>
+              <View style={styles.viewtextDetail}>
+                <View style={{marginBottom: 10}}>
+                  <Text style={styles.textDetail}> Deskripsi </Text>
+                </View>
+                <View>
+                  <Text>{this.state.data.descripsi}</Text>
+                </View>
               </View>
             </View>
-          </View>
+          )}
         </ScrollView>
         <Modal
           animationType="slide"

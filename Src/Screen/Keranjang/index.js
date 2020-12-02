@@ -1,6 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {Component} from 'react';
-import {Text, View, Image, TouchableOpacity, ScrollView} from 'react-native';
+import {
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  Button,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from '../../Components/BoxKeranjang';
 
@@ -11,15 +18,6 @@ class Keranjang extends Component {
       data: [],
       token: '',
     };
-    AsyncStorage.getItem('token').then((token) => {
-      if (token != null) {
-        this.setState({token: token}, () => {
-          this.keranjang();
-        });
-      } else {
-        console.log('token tidak ada');
-      }
-    });
   }
   keranjang = () => {
     const url = 'https://api-shop1.herokuapp.com/api/keranjang';
@@ -35,7 +33,7 @@ class Keranjang extends Component {
       .then((resJson) => {
         console.log(resJson.pesanan_detail);
         this.setState({data: resJson.pesanan_detail});
-        console.log(this.state.data[0].id);
+        console.log(this.state.data);
       })
       .catch((error) => {
         console.log('error is' + error);
@@ -60,55 +58,105 @@ class Keranjang extends Component {
         console.log('error is' + error);
       });
   };
+  componentDidMount() {
+    AsyncStorage.getItem('token').then((token) => {
+      if (token != null) {
+        this.setState({token: token}, () => {
+          this.keranjang();
+        });
+      } else {
+        console.log('token tidak ada');
+      }
+    });
+  }
 
   render() {
     return (
       <View style={styles.viewUtama}>
         <ScrollView>
-          {this.state.data == null ? (
-            <View style={{justifyContent: 'center', alignItems: 'center'}}>
-              <Text> Data Tidak Tersedia </Text>
-              <Text> Harap Periksa Internet Anda </Text>
-            </View>
-          ) : (
-            <View style={styles.boxTampildata}>
-              {this.state.data.map((val, key) => {
-                return (
-                  <View key={key} style={styles.boksProduk}>
-                    <TouchableOpacity>
-                      <View style={styles.viewImage}>
-                        <Image
-                          source={{uri: val.gambar}}
-                          style={styles.image}
-                        />
-                      </View>
-                      <View style={styles.viewTeks}>
-                        <Text>{val.nama}</Text>
-                        <Text>{'Rp ' + val.harga}</Text>
-                      </View>
-                      <View style={styles.viewTeks}>
-                        <Text>Jumlah : {val.jumlah_produk}</Text>
-                        <Text>Harga : Rp {val.jumlah_harga_produk}</Text>
-                      </View>
-                      <View style={{flexDirection: 'row'}}>
-                        <TouchableOpacity onPress={() => this.Delete()}>
-                          <Icon name="delete" size={45} />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                          onPress={() =>
-                            this.props.navigation.navigate('CheckOut', {
-                              item: val,
-                            })
-                          }>
-                          <Icon name="home" size={45} />
-                        </TouchableOpacity>
-                      </View>
-                    </TouchableOpacity>
+          <View>
+            {this.state.token == '' ? (
+              <View>
+                <Text> Harap LogIn terlebih Dahulu</Text>
+                <View style={styles.loginRegister}>
+                  <View style={styles.BoxImage}>
+                    <Image
+                      source={require('../../Assets/Image.png')}
+                      style={{width: 70, height: 70}}
+                    />
                   </View>
-                );
-              })}
-            </View>
-          )}
+                  <View style={styles.posisenLogin}>
+                    <View style={styles.boxLoginRegister}>
+                      <Button
+                        title="MASUK"
+                        onPress={() => this.props.navigation.navigate('Login')}
+                      />
+                    </View>
+                    <View style={styles.boxLoginRegister}>
+                      <Button
+                        title="DAFTAR"
+                        onPress={() =>
+                          this.props.navigation.navigate('Register')
+                        }
+                      />
+                    </View>
+                  </View>
+                </View>
+              </View>
+            ) : (
+              <View>
+                {this.state.data == null ? (
+                  <View
+                    style={{justifyContent: 'center', alignItems: 'center'}}>
+                    <Text> Data Tidak Tersedia </Text>
+                    <Text> Harap Periksa Internet Anda </Text>
+                  </View>
+                ) : (
+                  <View style={styles.boxTampildata}>
+                    {this.state.data.map((val, key) => {
+                      return (
+                        <View key={key} style={styles.boksProduk}>
+                          <TouchableOpacity>
+                            <View style={styles.viewImage}>
+                              <Image
+                                source={{uri: val.gambar}}
+                                style={styles.image}
+                              />
+                            </View>
+                            <View style={styles.viewTeks}>
+                              <Text>{val.nama}</Text>
+                              <Text>{'Rp ' + val.harga}</Text>
+                            </View>
+                            <View style={styles.viewTeks}>
+                              <Text>Jumlah : {val.jumlah_produk}</Text>
+                              <Text>Harga : Rp {val.jumlah_harga_produk}</Text>
+                            </View>
+                            <View style={{flexDirection: 'row'}}>
+                              <TouchableOpacity onPress={() => this.Delete()}>
+                                <Icon name="delete" size={45} />
+                              </TouchableOpacity>
+                              <TouchableOpacity
+                                onPress={() =>
+                                  this.props.navigation.navigate(
+                                    'CheckOut',
+                                    {
+                                      item: val,
+                                    },
+                                    this.keranjang(),
+                                  )
+                                }>
+                                <Icon name="home" size={45} />
+                              </TouchableOpacity>
+                            </View>
+                          </TouchableOpacity>
+                        </View>
+                      );
+                    })}
+                  </View>
+                )}
+              </View>
+            )}
+          </View>
         </ScrollView>
       </View>
     );

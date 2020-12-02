@@ -41,7 +41,10 @@ export class Convirmation extends Component {
       .then((respon) => respon.json())
       .then((resJson) => {
         console.log(resJson.pesanan_detail);
-        this.setState({data: resJson.pesanan_detail, loading: false});
+        this.setState({
+          data: resJson.pesanan_detail,
+          loading: false,
+        });
         console.log(this.state.data[0].id);
       })
       .catch((error) => {
@@ -71,12 +74,35 @@ export class Convirmation extends Component {
         this.setState({loading: false});
       });
   };
+  statusBarang(status, id) {
+    if (this.state.data[0].status == '1') {
+      return (
+        <View>
+          <Text>Sedang Dalam Pengiriman</Text>
+          <Button title="Diterima" onPress={() => this.konfir()} />
+        </View>
+      );
+    } else if (this.state.data[0].status == '2') {
+      return (
+        <View>
+          <Text> Pesanan Dalam Pengiriman </Text>
+        </View>
+      );
+    } else if (this.state.data[0].status == '3') {
+      return (
+        <View>
+          <Text> Pesanan Telah Diterima Oleh Pembeli </Text>
+        </View>
+      );
+    }
+  }
   render() {
     return (
       <View>
-        {this.state.data == null ? (
+        {this.state.data == '' ? (
           <View>
             <ActivityIndicator color="red" size={30} />
+            <Text>Barang anda Belium Ada Pembeli</Text>
           </View>
         ) : (
           <View style={styles.boxTampildata}>
@@ -96,9 +122,7 @@ export class Convirmation extends Component {
                       <Text>{'Rp ' + val.harga}</Text>
                     </View>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={() => this.konfir()}>
-                    <Text>Convirmation</Text>
-                  </TouchableOpacity>
+                  <View>{this.statusBarang()}</View>
                 </View>
               );
             })}

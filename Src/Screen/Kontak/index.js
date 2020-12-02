@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   Image,
+  Button,
 } from 'react-native';
 // import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -57,49 +58,78 @@ class Kontak extends Component {
           <Text style={styles.Tittel}> Kontak </Text>
         </View>
         <ScrollView style={styles.viewUtama}>
-          {this.state.data == null ? (
-            <View>
-              <ActivityIndicator color="red" size={30} />
-            </View>
-          ) : (
-            <>
-              {this.state.data.map((val, key) => {
-                return (
-                  <View key={key}>
-                    <TouchableOpacity
-                      style={styles.boxPesan}
-                      onPress={() =>
-                        this.props.navigation.navigate('Message', {
-                          item: val.id,
-                        })
-                      }>
-                      <>
-                        <View>
-                          {val.foto !== '' ? (
-                            <Image
-                              source={{uri: val.foto}}
-                              style={styles.viewImage}
-                            />
-                          ) : (
-                            <View
-                              style={{
-                                ...styles.viewImage,
-                                backgroundColor: '#C0C0C0',
-                              }}>
-                              <Icon nama="user" size={25} />
-                            </View>
-                          )}
-                        </View>
-                      </>
-                      <View style={styles.viewTeks}>
-                        <Text>{val.name}</Text>
-                      </View>
-                    </TouchableOpacity>
+          <View>
+            {this.state.token == '' ? (
+              <View style={styles.loginRegister}>
+                <View style={styles.BoxImage}>
+                  <Image
+                    source={require('../../Assets/Image.png')}
+                    style={{width: 70, height: 70}}
+                  />
+                </View>
+                <View style={styles.posisenLogin}>
+                  <View style={styles.boxLoginRegister}>
+                    <Button
+                      title="MASUK"
+                      onPress={() => this.props.navigation.navigate('Login')}
+                    />
                   </View>
-                );
-              })}
-            </>
-          )}
+                  <View style={styles.boxLoginRegister}>
+                    <Button
+                      title="DAFTAR"
+                      onPress={() => this.props.navigation.navigate('Register')}
+                    />
+                  </View>
+                </View>
+              </View>
+            ) : (
+              <>
+                {this.state.data == null ? (
+                  <View>
+                    <ActivityIndicator color="red" size={30} />
+                  </View>
+                ) : (
+                  <>
+                    {this.state.data.map((val, key) => {
+                      return (
+                        <View key={key}>
+                          <TouchableOpacity
+                            style={styles.boxPesan}
+                            onPress={() =>
+                              this.props.navigation.navigate('Message', {
+                                item: val.id,
+                              })
+                            }>
+                            <>
+                              <View>
+                                {val.foto !== '' ? (
+                                  <Image
+                                    source={{uri: val.foto}}
+                                    style={styles.viewImage}
+                                  />
+                                ) : (
+                                  <View
+                                    style={{
+                                      ...styles.viewImage,
+                                      backgroundColor: '#C0C0C0',
+                                    }}>
+                                    <Icon nama="user" size={25} />
+                                  </View>
+                                )}
+                              </View>
+                            </>
+                            <View style={styles.viewTeks}>
+                              <Text>{val.name}</Text>
+                            </View>
+                          </TouchableOpacity>
+                        </View>
+                      );
+                    })}
+                  </>
+                )}
+              </>
+            )}
+          </View>
         </ScrollView>
       </View>
     );
@@ -134,6 +164,42 @@ const styles = StyleSheet.create({
     elevation: 3,
     flexDirection: 'row',
     marginTop: 5,
+  },
+  loginRegister: {
+    width: '90%',
+    height: 190,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    marginTop: 90,
+    marginLeft: 18,
+    elevation: 10,
+  },
+  BoxImage: {
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    alignSelf: 'center',
+    top: 50,
+    borderWidth: 7,
+    borderColor: '#3462f9',
+    marginTop: -95,
+    borderWidth: 7,
+    margin: 5,
+  },
+  posisenLogin: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 80,
+  },
+  boxLoginRegister: {
+    width: '40%',
+    height: 50,
+    margin: 5,
+    borderRadius: 20,
   },
 });
 export default Kontak;

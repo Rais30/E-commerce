@@ -186,7 +186,7 @@ export class Belanja extends Component {
                     <TouchableOpacity
                       style={styles.boksProduk}
                       onPress={() =>
-                        this.props.navigation.navigate('Detail', {item: val})
+                        this.props.navigation.navigate('Detail', {item: val.id})
                       }>
                       <View style={styles.viewImage}>
                         <Image
