@@ -11,6 +11,15 @@ class Keranjang extends Component {
       data: [],
       token: '',
     };
+    AsyncStorage.getItem('token').then((token) => {
+      if (token != null) {
+        this.setState({token: token}, () => {
+          this.keranjang();
+        });
+      } else {
+        console.log('token tidak ada');
+      }
+    });
   }
   keranjang = () => {
     const url = 'https://api-shop1.herokuapp.com/api/keranjang';
@@ -37,8 +46,8 @@ class Keranjang extends Component {
     fetch(url, {
       method: 'DELETE',
       headers: {
-        Accept: 'aplication/json',
-        'Content-Type': 'aplication/json',
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${this.state.token}`,
       },
     })
@@ -51,17 +60,7 @@ class Keranjang extends Component {
         console.log('error is' + error);
       });
   };
-  componentDidMount() {
-    AsyncStorage.getItem('token').then((token) => {
-      if (token != null) {
-        this.setState({token: token}, () => {
-          this.keranjang();
-        });
-      } else {
-        console.log('token tidak ada');
-      }
-    });
-  }
+
   render() {
     return (
       <View style={styles.viewUtama}>
@@ -97,7 +96,9 @@ class Keranjang extends Component {
                         </TouchableOpacity>
                         <TouchableOpacity
                           onPress={() =>
-                            this.props.navigation.navigate('CheckOut')
+                            this.props.navigation.navigate('CheckOut', {
+                              item: val,
+                            })
                           }>
                           <Icon name="home" size={45} />
                         </TouchableOpacity>

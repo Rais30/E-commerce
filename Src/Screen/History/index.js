@@ -8,6 +8,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Button,
+  ScrollView,
 } from 'react-native';
 
 export class History extends Component {
@@ -18,7 +19,6 @@ export class History extends Component {
       data: [],
       loading: false,
       statusBarang: '',
-      status: '',
     };
     AsyncStorage.getItem('token').then((token) => {
       if (token != null) {
@@ -31,13 +31,14 @@ export class History extends Component {
     });
   }
   history = () => {
+    console.log('mulai historys');
     const url = 'https://api-shop1.herokuapp.com/api/history';
     this.setState({loading: true});
     fetch(url, {
       method: 'GET',
       headers: {
-        Accept: 'aplication/json',
-        'Content-Type': 'aplication/json',
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${this.state.token}`,
       },
     })
@@ -47,36 +48,30 @@ export class History extends Component {
         this.setState({
           data: resJson.pesanan_detail,
           loading: false,
-          status: resJson.pesanan_detail[0].status,
         });
-        console.log(this.state.status);
-        console.log(this.state.data[0].id);
       })
       .catch((error) => {
         console.log('error is' + error);
         this.setState({loading: false});
       });
   };
-  konfir = () => {
-    const url = `https://api-shop1.herokuapp.com/api/konfirmasiPembeli/${this.data[0].id}`;
+  konfir = (id) => {
+    const idH = id;
+    const url = `https://api-shop1.herokuapp.com/api/konfirmasiPembeli/${idH}`;
     this.setState({loading: true});
     fetch(url, {
       method: 'GET',
       headers: {
-        Accept: 'aplication/json',
-        'Content-Type': 'aplication/json',
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${this.state.token}`,
       },
     })
       .then((respon) => respon.json())
       .then((resJson) => {
         console.log(resJson);
-        this.setState({
-          data: resJson.pesanan_detail,
-          loading: false,
-          status: resJson.pesanan_detail[0].status,
-        });
-        console.log(this.state.status);
+
+        console.log(this.state.data.status);
       })
       .catch((error) => {
         console.log('error is' + error);
@@ -84,15 +79,38 @@ export class History extends Component {
       });
   };
 
+  statusBarang(status, id) {
+    if (status == '1') {
+      return (
+        <View>
+          <Text> Pesanan Anda Sedang DIkemas </Text>
+        </View>
+      );
+    } else if (status == '2') {
+      return (
+        <View>
+          <Text>Sedang Dalam Pengiriman</Text>
+          <Button title="Diterima" onPress={() => this.konfir(id)} />
+        </View>
+      );
+    } else if (status == '3') {
+      return (
+        <View>
+          <Text> Pesanan Telah Diterima </Text>
+        </View>
+      );
+    }
+  }
+
   render() {
     return (
-      <View>
+      <ScrollView contentContainerStyle={styles.viewUtama}>
         {this.state.data == null ? (
           <View>
             <ActivityIndicator color="red" size={30} />
           </View>
         ) : (
-          <View style={styles.boxTampildata}>
+          <>
             {this.state.data.map((val, key) => {
               return (
                 <View key={key}>
@@ -108,30 +126,24 @@ export class History extends Component {
                       <Text>{val.nama}</Text>
                       <Text>{'Rp ' + val.harga}</Text>
                     </View>
+                    <View>{this.statusBarang(val.status, val.id)}</View>
                   </TouchableOpacity>
-                  {this.state.status == 1 ? (
-                    <View>
-                      <Text> Pesanan Anda Sedang DIkemas </Text>
-                    </View>
-                  ) : (
-                    <View>
-                      <Text>Sedang Dalam Pengiriman</Text>
-                      <Button title="Diterima" onPress={() => this.konfir()} />
-                    </View>
-                  )}
                 </View>
               );
             })}
-          </View>
+          </>
         )}
-      </View>
+      </ScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
   viewUtama: {
-    flex: 1,
+    flexGrow: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-evenly',
   },
   boxTampildata: {
     width: '100%',
@@ -139,12 +151,15 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   boksProduk: {
-    width: '100%',
+    width: 170,
     height: 270,
     backgroundColor: 'white',
+    marginTop: 10,
+    elevation: 5,
     borderRadius: 10,
     paddingTop: 5,
-    paddingTop: 5,
+
+    marginBottom: 5,
   },
   image: {
     width: 150,

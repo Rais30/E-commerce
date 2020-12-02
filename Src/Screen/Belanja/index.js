@@ -39,7 +39,6 @@ export class Belanja extends Component {
     })
       .then((respon) => respon.json())
       .then((resJson) => {
-        console.log(resJson.data);
         this.setState({data: resJson.data, loading: false});
       })
       .catch((error) => {
@@ -74,7 +73,7 @@ export class Belanja extends Component {
             <Icon
               name="chat"
               size={30}
-              onPress={() => this.props.navigation.navigate('Message')}
+              onPress={() => this.props.navigation.navigate('Kontak')}
             />
           </View>
         </View>
@@ -187,7 +186,7 @@ export class Belanja extends Component {
                     <TouchableOpacity
                       style={styles.boksProduk}
                       onPress={() =>
-                        this.props.navigation.navigate('Detail', {item: val.id})
+                        this.props.navigation.navigate('Detail', {item: val})
                       }>
                       <View style={styles.viewImage}>
                         <Image

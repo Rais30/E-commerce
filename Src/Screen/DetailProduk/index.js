@@ -9,6 +9,7 @@ import {
   Modal,
   ActivityIndicator,
 } from 'react-native';
+import {Value} from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from '../../Components/BoxDetail';
 
@@ -16,18 +17,16 @@ export class Detail extends Component {
   constructor() {
     super();
     this.state = {
-      data: [],
+      data: {},
       jumlah_produk: 0,
       token: '',
       modal: false,
       loading: false,
     };
-  }
-
-  componentDidMount() {
     AsyncStorage.getItem('token').then((token) => {
       if (token != null) {
         this.setState({token: token});
+        console.log(token);
         this.produk();
       } else {
         console.log('token tidak ada');
@@ -36,8 +35,9 @@ export class Detail extends Component {
   }
 
   produk = () => {
-    const id = this.props.route.params.item;
-    const url = `https://api-shop1.herokuapp.com/api/produk/${id}`;
+    const url =
+      `https://api-shop1.herokuapp.com/api/produk/` +
+      this.props.route.params.item.id;
     this.setState({loading: true});
     fetch(url, {
       method: 'GET',
@@ -49,7 +49,6 @@ export class Detail extends Component {
       .then((respon) => respon.json())
       .then((resJson) => {
         this.setState({data: resJson.data, loading: false});
-        console.log(resJson.data);
       })
       .catch((error) => {
         console.log('error is' + error);
@@ -58,8 +57,9 @@ export class Detail extends Component {
   };
 
   keranjang = () => {
+    const idh = this.props.route.params.item.id;
     const {jumlah_produk} = this.state;
-    const url = `https://api-shop1.herokuapp.com/api/keranjang/${this.state.data.id}`;
+    const url = `https://api-shop1.herokuapp.com/api/keranjang/${idh}`;
     this.setState({loading: true});
     fetch(url, {
       method: 'POST',
@@ -147,7 +147,7 @@ export class Detail extends Component {
               <View style={{flexDirection: 'row'}}>
                 <View style={styles.viewText}>
                   <Text style={{fontSize: 17, color: 'red'}}>
-                    Rp {this.state.data.harga}
+                    Rp {this.props.route.params.item.harga}
                   </Text>
                 </View>
                 <View>
@@ -187,8 +187,8 @@ export class Detail extends Component {
           </View>
         </Modal>
 
-        <View>
-          <View>
+        <View style={{flexDirection: 'row', width: '100%'}}>
+          <View style={{marginLeft: 10}}>
             <TouchableOpacity
               style={{
                 backgroundColor: 'red',
@@ -199,6 +199,23 @@ export class Detail extends Component {
               }}
               onPress={() => this.setState({modal: true})}>
               <Icon name="add-shopping-cart" size={30} />
+            </TouchableOpacity>
+          </View>
+          <View style={{marginLeft: 10}}>
+            <TouchableOpacity
+              style={{
+                backgroundColor: 'red',
+                width: 50,
+                height: 50,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              onPress={() =>
+                this.props.navigation.navigate('Message', {
+                  item: this.state.data.user_id,
+                })
+              }>
+              <Icon name="message" size={30} />
             </TouchableOpacity>
           </View>
         </View>

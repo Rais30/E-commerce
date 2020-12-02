@@ -19,6 +19,7 @@ import EditProfil from '../Screen/EditProfil';
 import CheckOut from '../Screen/CheckOut';
 import Convirmation from '../Screen/Convirmation';
 import History from '../Screen/History';
+import Kontak from '../Screen/Kontak';
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -84,6 +85,7 @@ class Navigation extends React.Component {
           <Stack.Screen name="CheckOut" component={CheckOut} />
           <Stack.Screen name="Konfir" component={Convirmation} />
           <Stack.Screen name="History" component={History} />
+          <Stack.Screen name="Kontak" component={Kontak} />
         </Stack.Navigator>
       </NavigationContainer>
     );

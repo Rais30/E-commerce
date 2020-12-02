@@ -70,7 +70,7 @@ export class CheckOut extends Component {
         .then((response) => response.json())
         .then((response) => {
           if (response) console.log(response);
-          alert('Data diambahkan!');
+          alert('Pesaman DiBuat');
           this.props.navigation.replace('History');
         })
         .catch((error) => {
@@ -92,19 +92,18 @@ export class CheckOut extends Component {
         ) : (
           <View style={styles.boxTampildata}>
             <View style={styles.boksProduk}>
-              {this.state.produk.map((val, key) => {
-                return (
-                  <View key={key}>
-                    <View style={styles.viewImage}>
-                      <Image source={{uri: val.gambar}} style={styles.image} />
-                    </View>
-                    <View style={styles.viewTeks}>
-                      <Text>{val.nama}</Text>
-                      <Text>{'Rp ' + val.harga}</Text>
-                    </View>
-                  </View>
-                );
-              })}
+              <View>
+                <View style={styles.viewImage}>
+                  <Image
+                    source={{uri: this.props.route.params.item.gambar}}
+                    style={styles.image}
+                  />
+                </View>
+                <View style={styles.viewTeks}>
+                  <Text>{this.props.route.params.item.nama}</Text>
+                  <Text>{'Rp ' + this.props.route.params.item.harga}</Text>
+                </View>
+              </View>
             </View>
             <View>
               <View style={{backgroundColor: 'white'}}>
