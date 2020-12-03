@@ -134,7 +134,7 @@ export class Home extends Component {
             </View>
           </View>
         ) : (
-          <View>
+          <View style={{flex: 1}}>
             <ScrollView>
               <View>
                 {this.state.data.length == 0 ? (
@@ -142,7 +142,7 @@ export class Home extends Component {
                     <ActivityIndicator color="red" size={30} />
                   </View>
                 ) : (
-                  <View>
+                  <>
                     {this.state.data.map((value, key) => {
                       return (
                         <View key={key}>
@@ -158,7 +158,7 @@ export class Home extends Component {
                         </View>
                       );
                     })}
-                  </View>
+                  </>
                 )}
               </View>
             </ScrollView>

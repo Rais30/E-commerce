@@ -33,4 +33,17 @@ export default StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
+  viewModal: {
+    position: 'absolute',
+    flexDirection: 'row',
+    top: 200,
+    left: 20,
+  },
+  isiModal: {
+    width: 350,
+    backgroundColor: 'white',
+    borderRadius: 5,
+    height: 150,
+  },
+  textModal: {fontSize: 17, color: 'red'},
 });

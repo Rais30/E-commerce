@@ -113,30 +113,25 @@ export class History extends Component {
         <ScrollView contentContainerStyle={styles.viewUtama}>
           <View>
             {this.state.token == '' ? (
-              <View>
-                <Text> Harap LogIn terlebih Dahulu</Text>
-                <View style={styles.loginRegister}>
-                  <View style={styles.BoxImage}>
-                    <Image
-                      source={require('../../Assets/Image.png')}
-                      style={{width: 70, height: 70}}
+              <View style={styles.loginRegister}>
+                <View style={styles.BoxImage}>
+                  <Image
+                    source={require('../../Assets/Image.png')}
+                    style={{width: 70, height: 70}}
+                  />
+                </View>
+                <View style={styles.posisenLogin}>
+                  <View style={styles.boxLoginRegister}>
+                    <Button
+                      title="MASUK"
+                      onPress={() => this.props.navigation.navigate('Login')}
                     />
                   </View>
-                  <View style={styles.posisenLogin}>
-                    <View style={styles.boxLoginRegister}>
-                      <Button
-                        title="MASUK"
-                        onPress={() => this.props.navigation.navigate('Login')}
-                      />
-                    </View>
-                    <View style={styles.boxLoginRegister}>
-                      <Button
-                        title="DAFTAR"
-                        onPress={() =>
-                          this.props.navigation.navigate('Register')
-                        }
-                      />
-                    </View>
+                  <View style={styles.boxLoginRegister}>
+                    <Button
+                      title="DAFTAR"
+                      onPress={() => this.props.navigation.navigate('Register')}
+                    />
                   </View>
                 </View>
               </View>

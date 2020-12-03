@@ -136,7 +136,20 @@ class Profil extends Component {
                       <Text>{this.state.data.alamat} </Text>
                     </View>
                   </View>
-
+                  <View style={styles.dataMember}>
+                    <Icon
+                      name="portrait"
+                      size={35}
+                      onPress={() =>
+                        this.props.navigation.navigate('EditProfil', {
+                          item: this.state.data,
+                        })
+                      }
+                    />
+                    <View style={styles.dataText}>
+                      <Text>Edit Profils</Text>
+                    </View>
+                  </View>
                   <View style={styles.dataMember}>
                     <Icon
                       name="portrait"

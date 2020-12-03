@@ -127,7 +127,7 @@ export class Belanja extends Component {
                     style={styles.kategari}
                     onPress={
                       (() => this.navigation.navigate('Kategori'),
-                      {katergori: this.state.Makanan})
+                      {item: this.state.Makanan})
                     }>
                     <Image
                       source={require('../../Assets/icons8-refreshments-48.png')}
@@ -143,7 +143,7 @@ export class Belanja extends Component {
                     style={styles.kategari}
                     onPress={
                       (() => this.navigation.navigate('Kategori'),
-                      {kategori: this.state.Elektronik})
+                      {item: this.state.Elektronik})
                     }>
                     <Image
                       source={require('../../Assets/icons8-tv-on-48.png')}
@@ -160,7 +160,7 @@ export class Belanja extends Component {
                     style={styles.kategari}
                     onPress={
                       (() => this.navigation.navigate('Kategori'),
-                      {kategori: this.state.perawatan})
+                      {item: this.state.perawatan})
                     }>
                     <Image
                       source={require('../../Assets/personal-care-512.png')}

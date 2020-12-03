@@ -71,7 +71,7 @@ export class CheckOut extends Component {
         .then((response) => {
           if (response) console.log(response);
           alert('Pesaman DiBuat');
-          this.props.navigation.replace('History');
+          this.props.navigation.replace('Home', {screan: 'History'});
         })
         .catch((error) => {
           console.log('Erro ', error);

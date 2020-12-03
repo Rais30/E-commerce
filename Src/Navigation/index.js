@@ -78,7 +78,7 @@ class Navigation extends React.Component {
           <Stack.Screen name="Keranjang" component={Keranjang} />
           <Stack.Screen name="Message" component={Message} />
           <Stack.Screen name="AddProduct" component={AddProduct} />
-          <Stack.Screen name="kategori" component={Kategori} />
+          <Stack.Screen name="Kategori" component={Kategori} />
           <Stack.Screen name="Detail" component={Detail} />
           <Stack.Screen name="Edit" component={EditProduk} />
           <Stack.Screen name="EditProfil" component={EditProfil} />

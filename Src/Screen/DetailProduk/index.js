@@ -8,7 +8,6 @@ import {
   ScrollView,
   Modal,
 } from 'react-native';
-import {Value} from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from '../../Components/BoxDetail';
 
@@ -18,22 +17,12 @@ export class Detail extends Component {
     this.state = {
       data: {},
       jumlah_produk: 0,
-      token: '',
       modal: false,
       loading: false,
+      token: '',
     };
   }
-  componentDidMount() {
-    AsyncStorage.getItem('token').then((token) => {
-      if (token != null) {
-        this.setState({token: token});
-        console.log(token);
-        this.produk();
-      } else {
-        console.log('token tidak ada');
-      }
-    });
-  }
+
   produk = () => {
     const url =
       `https://api-shop1.herokuapp.com/api/produk/` +
@@ -81,7 +70,9 @@ export class Detail extends Component {
           this.setState({loading: false});
         }
       })
-      .catch((err) => console.log('Terjadi kesalahan. ' + err));
+      .catch((err) => {
+        console.log('Terjadi kesalahan. ' + err);
+      });
   };
   jumlah_produk = () => {
     this.setState({jumlah_produk: this.state.jumlah_produk + 1});
@@ -89,6 +80,16 @@ export class Detail extends Component {
   kurang = () => {
     this.setState({jumlah_produk: this.state.jumlah_produk - 1});
   };
+  componentDidMount() {
+    AsyncStorage.getItem('token').then((value) => {
+      if (value != '') {
+        this.setState({token: value, data: this.props.route.params.item});
+        this.produk();
+      } else {
+        console.log('token tidak ada');
+      }
+    });
+  }
 
   render() {
     return (
@@ -129,30 +130,17 @@ export class Detail extends Component {
           )}
         </ScrollView>
         <Modal
+          style={{flex: 1}}
           animationType="slide"
           transparent={true}
           visible={this.state.modal}
           onRequestClose={() => this.setState({modal: false})}>
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: 'rgba(0,0,0,0.5)',
-              flexDirection: 'row',
-            }}>
-            <View
-              style={{
-                width: 350,
-                backgroundColor: 'white',
-                borderRadius: 5,
-                height: 150,
-                // flexDirection: 'row',
-              }}>
+          <View style={styles.viewModal}>
+            <View style={styles.isiModal}>
               <View style={{flexDirection: 'row'}}>
                 <View style={styles.viewText}>
-                  <Text style={{fontSize: 17, color: 'red'}}>
-                    Rp {this.props.route.params.item.harga}
+                  <Text style={styles.textModal}>
+                    Rp {this.state.data.harga}
                   </Text>
                 </View>
                 <View>
