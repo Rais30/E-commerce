@@ -63,7 +63,7 @@ export class Detail extends Component {
         console.log(resjson);
         const {status} = resjson;
         if (status == 'success') {
-          this.setState({loading: false});
+          this.setState({modal: false});
           this.props.navigation.replace('Home', {screen: 'Keranjang'});
         } else {
           console.log('error');
@@ -89,6 +89,10 @@ export class Detail extends Component {
         console.log('token tidak ada');
       }
     });
+  }
+  login() {
+    this.setState({modal: false});
+    this.props.navigation.navigate('Login');
   }
 
   render() {
@@ -164,17 +168,31 @@ export class Detail extends Component {
                 </View>
               </View>
               <View>
-                <TouchableOpacity
-                  style={{
-                    backgroundColor: 'red',
-                    width: 50,
-                    height: 50,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                  onPress={() => this.keranjang()}>
-                  <Icon name="add-shopping-cart" size={30} />
-                </TouchableOpacity>
+                {this.state.token == null ? (
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor: 'red',
+                      width: 50,
+                      height: 50,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                    onPress={() => this.login()}>
+                    <Icon name="add-shopping-cart" size={30} />
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor: 'red',
+                      width: 50,
+                      height: 50,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                    onPress={() => this.keranjang()}>
+                    <Icon name="add-shopping-cart" size={30} />
+                  </TouchableOpacity>
+                )}
               </View>
             </View>
           </View>

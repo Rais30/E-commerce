@@ -46,7 +46,15 @@ export class Belanja extends Component {
         this.setState({loading: false});
       });
   };
-
+  Makanan = () => {
+    this.props.navigation.navigate('Kategori', {item: this.state.Makanan});
+  };
+  Elektronik = () => {
+    this.props.navigation.navigate('Kategori', {item: this.state.Elektronik});
+  };
+  perawatan = () => {
+    this.props.navigation.navigate('Kategori', {item: this.state.perawatan});
+  };
   render() {
     return (
       <View style={{flex: 1}}>
@@ -58,10 +66,20 @@ export class Belanja extends Component {
             />
           </View>
           <View style={styles.input}>
-            <TextInput
-              placeholder=" Search "
-              value={this.state.input}
-              onChangeText={(text) => this.setState({input: text})}
+            <Text style={{fontSize: 30}}> Sisinjang </Text>
+          </View>
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              paddingLeft: 5,
+              marginRight: 7,
+              marginLeft: 7,
+            }}>
+            <Icon
+              name="search"
+              size={30}
+              onPress={() => this.props.navigation.navigate('Pencarian')}
             />
           </View>
           <View
@@ -121,14 +139,12 @@ export class Belanja extends Component {
               <View
                 style={{
                   flexDirection: 'row',
+                  justifyContent: 'center',
                 }}>
                 <View>
                   <TouchableOpacity
                     style={styles.kategari}
-                    onPress={
-                      (() => this.navigation.navigate('Kategori'),
-                      {item: this.state.Makanan})
-                    }>
+                    onPress={() => this.Makanan()}>
                     <Image
                       source={require('../../Assets/icons8-refreshments-48.png')}
                       style={styles.imageKatagori}
@@ -141,10 +157,7 @@ export class Belanja extends Component {
                 <View>
                   <TouchableOpacity
                     style={styles.kategari}
-                    onPress={
-                      (() => this.navigation.navigate('Kategori'),
-                      {item: this.state.Elektronik})
-                    }>
+                    onPress={() => this.Elektronik()}>
                     <Image
                       source={require('../../Assets/icons8-tv-on-48.png')}
                       style={styles.imageKatagori}
@@ -158,10 +171,7 @@ export class Belanja extends Component {
                 <View>
                   <TouchableOpacity
                     style={styles.kategari}
-                    onPress={
-                      (() => this.navigation.navigate('Kategori'),
-                      {item: this.state.perawatan})
-                    }>
+                    onPress={() => this.perawatan()}>
                     <Image
                       source={require('../../Assets/personal-care-512.png')}
                       style={styles.imageKatagori}

@@ -20,6 +20,8 @@ import CheckOut from '../Screen/CheckOut';
 import Convirmation from '../Screen/Convirmation';
 import History from '../Screen/History';
 import Kontak from '../Screen/Kontak';
+import Pencarian from '../Screen/Pencarian';
+import cariKontak from '../Screen/cariKontak';
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -86,6 +88,8 @@ class Navigation extends React.Component {
           <Stack.Screen name="Konfir" component={Convirmation} />
           <Stack.Screen name="History" component={History} />
           <Stack.Screen name="Kontak" component={Kontak} />
+          <Stack.Screen name="Pencarian" component={Pencarian} />
+          <Stack.Screen name="cariKontak" component={cariKontak} />
         </Stack.Navigator>
       </NavigationContainer>
     );

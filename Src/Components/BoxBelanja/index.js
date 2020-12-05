@@ -15,13 +15,13 @@ export default StyleSheet.create({
   },
   input: {
     marginHorizontal: 10,
-    backgroundColor: '#babdcf',
+    // backgroundColor: '#babdcf',
     marginVertical: 10,
-    width: '70%',
-    borderRadius: 30,
+    width: '55%',
+    // borderRadius: 30,
   },
   boksKategore: {
-    width: '100%',
+    width: 400,
     height: 100,
     backgroundColor: '#1e90ff',
   },

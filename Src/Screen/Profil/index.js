@@ -173,8 +173,12 @@ class Profil extends Component {
                     </View>
                     <ScrollView horizontal>
                       {this.state.data == null ? (
-                        <View>
-                          <ActivityIndicator color="red" size={30} />
+                        <View
+                          style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                          }}>
+                          <Text>Tidak Ada Barang Yang Anda Jual</Text>
                         </View>
                       ) : (
                         <View style={styles.boxTampildata}>
