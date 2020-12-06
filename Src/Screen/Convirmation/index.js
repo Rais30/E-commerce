@@ -7,7 +7,9 @@ import {
   Image,
   TouchableOpacity,
   ActivityIndicator,
+  Button,
 } from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 
 export class Convirmation extends Component {
   constructor() {
@@ -77,57 +79,92 @@ export class Convirmation extends Component {
   statusBarang(status, id) {
     if (this.state.data[0].status == '1') {
       return (
-        <View>
-          <Text>Sedang Dalam Pengiriman</Text>
+        <View style={styles.textKonfrim}>
+          <View>
+            <Text> Alamat = {this.state.data[0].alamat}</Text>
+          </View>
+          <View>
+            <Text>Nomer = {this.state.data[0].nomer} </Text>
+          </View>
+          <Text style={styles.konfir}>Sedang Dalam Pengiriman</Text>
           <Button title="Diterima" onPress={() => this.konfir()} />
         </View>
       );
     } else if (this.state.data[0].status == '2') {
       return (
-        <View>
-          <Text> Pesanan Dalam Pengiriman </Text>
+        <View style={styles.textKonfrim}>
+          <View>
+            <Text> Alamat = {this.state.data[0].alamat}</Text>
+          </View>
+          <View>
+            <Text>Nomer = {this.state.data[0].nomer} </Text>
+          </View>
+          <Text style={{color: 'blue'}}> Pesanan Dalam Pengiriman </Text>
         </View>
       );
     } else if (this.state.data[0].status == '3') {
       return (
-        <View>
-          <Text> Pesanan Telah Diterima Oleh Pembeli </Text>
+        <View style={styles.textKonfrim}>
+          <Text style={{color: 'green'}}>
+            Pesanan Telah Diterima Oleh Pembeli
+          </Text>
         </View>
       );
     }
   }
+  Alamat() {
+    if (this.state.data[0].status == '1') {
+      return (
+        <View>
+          <View>
+            <Text>{this.state.data[0].harga}</Text>
+          </View>
+        </View>
+      );
+    }
+  }
+
   render() {
     return (
-      <View>
-        {this.state.data == '' ? (
-          <View>
-            <ActivityIndicator color="red" size={30} />
-            <Text>Barang anda Belium Ada Pembeli</Text>
-          </View>
-        ) : (
-          <View style={styles.boxTampildata}>
-            {this.state.data.map((val, key) => {
-              return (
-                <View key={key}>
-                  <TouchableOpacity
-                    style={styles.boksProduk}
-                    onPress={() =>
-                      this.props.navigation.navigate('Detail', {item: val})
-                    }>
-                    <View style={styles.viewImage}>
-                      <Image source={{uri: val.gambar}} style={styles.image} />
+      <View style={{flex: 1}}>
+        <View style={styles.header}>
+          <Text style={styles.Tittel}> Konfirmasi </Text>
+        </View>
+        <ScrollView>
+          {this.state.data == '' ? (
+            <View>
+              <ActivityIndicator color="red" size={30} />
+              <Text>belum ada Barang yang di Beli</Text>
+            </View>
+          ) : (
+            <View
+              style={{
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                justifyContent: 'space-around',
+              }}>
+              {this.state.data.map((val, key) => {
+                return (
+                  <View key={key}>
+                    <View style={styles.boksProduk}>
+                      <View style={styles.viewImage}>
+                        <Image
+                          source={{uri: val.gambar}}
+                          style={styles.image}
+                        />
+                      </View>
+                      <View style={styles.viewTeks}>
+                        <Text>{val.nama}</Text>
+                        <Text>{'Rp ' + val.harga}</Text>
+                      </View>
+                      <View>{this.statusBarang()}</View>
                     </View>
-                    <View style={styles.viewTeks}>
-                      <Text>{val.nama}</Text>
-                      <Text>{'Rp ' + val.harga}</Text>
-                    </View>
-                  </TouchableOpacity>
-                  <View>{this.statusBarang()}</View>
-                </View>
-              );
-            })}
-          </View>
-        )}
+                  </View>
+                );
+              })}
+            </View>
+          )}
+        </ScrollView>
       </View>
     );
   }
@@ -137,29 +174,50 @@ const styles = StyleSheet.create({
   viewUtama: {
     flex: 1,
   },
-  boxTampildata: {
-    width: '100%',
-    height: '100%',
-    flexWrap: 'wrap',
-  },
   boksProduk: {
-    width: '100%',
+    width: 170,
     height: 270,
     backgroundColor: 'white',
     borderRadius: 10,
-    paddingTop: 5,
-    paddingTop: 5,
+    paddingTop: 10,
+    // alignItems: 'center',
+    // paddingTop: 5,
+    marginLeft: 7,
+    marginBottom: 10,
   },
   image: {
-    width: 150,
-    height: 150,
+    width: 130,
+    height: 130,
   },
   viewImage: {
     alignItems: 'center',
+    borderRadius: 5,
   },
   viewTeks: {
     paddingLeft: 7,
     // justifyContent: 'space-around',
+  },
+  header: {
+    width: '100%',
+    height: 50,
+    backgroundColor: '#1589FF',
+    elevation: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 10,
+  },
+  Tittel: {
+    fontWeight: 'bold',
+    fontSize: 30,
+    color: 'white',
+  },
+  textKonfrim: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 5,
+  },
+  konfir: {
+    color: 'red',
   },
 });
 export default Convirmation;

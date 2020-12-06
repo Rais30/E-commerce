@@ -172,7 +172,7 @@ class Profil extends Component {
                       <Text>Toko Saya</Text>
                     </View>
                     <ScrollView horizontal>
-                      {this.state.data == null ? (
+                      {this.state.data == '' ? (
                         <View
                           style={{
                             justifyContent: 'center',

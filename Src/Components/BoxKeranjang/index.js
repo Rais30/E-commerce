@@ -70,4 +70,18 @@ export default StyleSheet.create({
     margin: 5,
     borderRadius: 20,
   },
+  header: {
+    width: '100%',
+    height: 50,
+    backgroundColor: '#1589FF',
+    elevation: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 10,
+  },
+  Tittel: {
+    fontWeight: 'bold',
+    fontSize: 30,
+    color: 'white',
+  },
 });

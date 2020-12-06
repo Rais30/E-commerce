@@ -73,6 +73,9 @@ class Keranjang extends Component {
   render() {
     return (
       <View style={styles.viewUtama}>
+        <View style={styles.header}>
+          <Text style={styles.Tittel}> Keranjang </Text>
+        </View>
         <ScrollView style={{flex: 1}}>
           <View>
             {this.state.token == '' ? (

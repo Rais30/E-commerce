@@ -26,7 +26,7 @@ export class History extends Component {
     AsyncStorage.getItem('token').then((token) => {
       if (token != null) {
         this.setState({token: token});
-        console.log(token);
+        // console.log(token);
         this.history();
       } else {
         console.log('token tidak ada');
@@ -51,7 +51,7 @@ export class History extends Component {
         this.setState({
           data: resJson.pesanan_detail,
         });
-        console.log(this.state.data[0].id);
+        // console.log(this.state.data[0].id);
       })
       .catch((error) => {
         console.log('error is' + error);
@@ -74,6 +74,7 @@ export class History extends Component {
       .then((resJson) => {
         console.log(resJson);
         console.log(this.state.data.status);
+        this.history();
       })
       .catch((error) => {
         console.log('error is' + error);
@@ -137,22 +138,18 @@ export class History extends Component {
               </View>
             ) : (
               <>
-                {this.state.data == '' ? (
-                  <View>
-                    <ActivityIndicator color="red" size={30} />
+                {this.state.data == null ? (
+                  <View
+                    style={{justifyContent: 'center', alignItems: 'center'}}>
+                    <Text> Data Tidak Tersedia </Text>
+                    <Text> Harap Periksa Internet Anda </Text>
                   </View>
                 ) : (
                   <View style={styles.viewUtama}>
                     {this.state.data.map((val, key) => {
                       return (
                         <View key={key}>
-                          <TouchableOpacity
-                            style={styles.boksProduk}
-                            onPress={() =>
-                              this.props.navigation.navigate('Detail', {
-                                item: val.pesanan_id,
-                              })
-                            }>
+                          <View style={styles.boksProduk}>
                             <View style={styles.viewImage}>
                               <Image
                                 source={{uri: val.gambar}}
@@ -164,7 +161,7 @@ export class History extends Component {
                               <Text>{'Rp ' + val.harga}</Text>
                             </View>
                             <View>{this.statusBarang(val.status, val.id)}</View>
-                          </TouchableOpacity>
+                          </View>
                         </View>
                       );
                     })}
@@ -200,6 +197,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-evenly',
+    // flex: 1,
   },
   boxTampildata: {
     width: '100%',
