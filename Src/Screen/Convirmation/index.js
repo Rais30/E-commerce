@@ -55,8 +55,9 @@ export class Convirmation extends Component {
         this.setState({loading: false});
       });
   };
-  konfir = () => {
-    const url = `https://api-shop1.herokuapp.com/api/konfirmasi/${this.state.data[0].id}`;
+  konfir = (id) => {
+    const idh = id;
+    const url = `https://api-shop1.herokuapp.com/api/konfirmasi/${idh}`;
     this.setState({loading: true});
     fetch(url, {
       method: 'GET',
@@ -77,7 +78,7 @@ export class Convirmation extends Component {
       });
   };
   statusBarang(status, id) {
-    if (this.state.data[0].status == '1') {
+    if (status == '1') {
       return (
         <View style={styles.textKonfrim}>
           <View>
@@ -86,11 +87,11 @@ export class Convirmation extends Component {
           <View>
             <Text>Nomer = {this.state.data[0].nomer} </Text>
           </View>
-          <Text style={styles.konfir}>Sedang Dalam Pengiriman</Text>
-          <Button title="Diterima" onPress={() => this.konfir()} />
+          <Text style={styles.konfir}> Menunggu Konfirmasi </Text>
+          <Button title="Konfirmasi" onPress={() => this.konfir(id)} />
         </View>
       );
-    } else if (this.state.data[0].status == '2') {
+    } else if (status == '2') {
       return (
         <View style={styles.textKonfrim}>
           <View>
@@ -102,7 +103,7 @@ export class Convirmation extends Component {
           <Text style={{color: 'blue'}}> Pesanan Dalam Pengiriman </Text>
         </View>
       );
-    } else if (this.state.data[0].status == '3') {
+    } else if (status == '3') {
       return (
         <View style={styles.textKonfrim}>
           <Text style={{color: 'green'}}>
@@ -139,7 +140,7 @@ export class Convirmation extends Component {
           ) : (
             <View
               style={{
-                flexDirection: 'row',
+                // flexDirection: 'row',
                 flexWrap: 'wrap',
                 justifyContent: 'space-around',
               }}>
@@ -155,9 +156,9 @@ export class Convirmation extends Component {
                       </View>
                       <View style={styles.viewTeks}>
                         <Text>{val.nama}</Text>
-                        <Text>{'Rp ' + val.harga}</Text>
+                        <Text>{'Rp ' + val.jumlah_harga}</Text>
                       </View>
-                      <View>{this.statusBarang()}</View>
+                      <View>{this.statusBarang(val.status, val.id)}</View>
                     </View>
                   </View>
                 );
@@ -175,8 +176,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   boksProduk: {
-    width: 170,
-    height: 270,
+    width: 370,
+    height: 300,
     backgroundColor: 'white',
     borderRadius: 10,
     paddingTop: 10,

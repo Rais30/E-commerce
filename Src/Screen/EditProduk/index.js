@@ -294,35 +294,30 @@ class EditProduk extends Component {
           </ScrollView>
         </Modal>
 
-        <View>
-          <View>
-            <TouchableOpacity
-              style={{
-                backgroundColor: 'red',
-                width: 50,
-                height: 50,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-              onPress={() => this.Delet()}>
-              <Icon name="delete" size={30} />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View>
-          <View>
-            <TouchableOpacity
-              style={{
-                backgroundColor: 'blue',
-                width: 50,
-                height: 50,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-              onPress={() => this.setState({modal: true})}>
-              <Icon name="create" size={30} />
-            </TouchableOpacity>
-          </View>
+        <View style={{flexDirection: 'row'}}>
+          <TouchableOpacity
+            style={{
+              backgroundColor: 'red',
+              width: '50%',
+              height: 50,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            onPress={() => this.Delet()}>
+            <Icon name="delete" size={30} />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={{
+              backgroundColor: '#4CC417',
+              width: '50%',
+              height: 50,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            onPress={() => this.setState({modal: true})}>
+            <Icon name="create" size={30} />
+          </TouchableOpacity>
         </View>
       </View>
     );

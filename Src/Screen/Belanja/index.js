@@ -57,11 +57,11 @@ export class Belanja extends Component {
   };
   render() {
     return (
-      <View style={{flex: 1}}>
+      <ScrollView style={{flex: 1}}>
         <View style={styles.viewUtama}>
           <View style={styles.header}>
             <Image
-              source={require('../../Assets/Image.png')}
+              source={require('../../Assets/ApaAja.png')}
               style={{width: 35, height: 35, alignSelf: 'center'}}
             />
           </View>
@@ -215,7 +215,7 @@ export class Belanja extends Component {
             </View>
           )}
         </ScrollView>
-      </View>
+      </ScrollView>
     );
   }
 }

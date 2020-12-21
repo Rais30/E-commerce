@@ -130,6 +130,26 @@ export class Detail extends Component {
                   <Text>{this.state.data.descripsi}</Text>
                 </View>
               </View>
+
+              <View>
+                {this.state.data.foto !== '' ? (
+                  <Image
+                    source={{uri: this.state.data.foto}}
+                    style={styles.viewImage}
+                  />
+                ) : (
+                  <View
+                    style={{
+                      ...styles.viewImage,
+                      backgroundColor: '#C0C0C0',
+                    }}>
+                    <Icon nama="user" size={25} />
+                  </View>
+                )}
+              </View>
+              <View style={styles.viewTeks}>
+                <Text>{this.state.data.name}</Text>
+              </View>
             </View>
           )}
         </ScrollView>

@@ -63,7 +63,7 @@ class Kontak extends Component {
               <View style={styles.loginRegister}>
                 <View style={styles.BoxImage}>
                   <Image
-                    source={require('../../Assets/Image.png')}
+                    source={require('../../Assets/ApaAja.png')}
                     style={{width: 70, height: 70}}
                   />
                 </View>
@@ -101,22 +101,20 @@ class Kontak extends Component {
                               })
                             }>
                             <>
-                              <View>
-                                {val.foto !== '' ? (
-                                  <Image
-                                    source={{uri: val.foto}}
-                                    style={styles.viewImage}
-                                  />
-                                ) : (
-                                  <View
-                                    style={{
-                                      ...styles.viewImage,
-                                      backgroundColor: '#C0C0C0',
-                                    }}>
-                                    <Icon nama="user" size={25} />
-                                  </View>
-                                )}
-                              </View>
+                              {val.foto !== '' ? (
+                                <Image
+                                  source={{uri: val.foto}}
+                                  style={styles.viewImage}
+                                />
+                              ) : (
+                                <View
+                                  style={{
+                                    ...styles.viewImage,
+                                    backgroundColor: '#C0C0C0',
+                                  }}>
+                                  <Icon nama="user" size={25} />
+                                </View>
+                              )}
                             </>
                             <View style={styles.viewTeks}>
                               <Text>{val.name}</Text>

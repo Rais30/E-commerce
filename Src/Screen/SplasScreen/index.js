@@ -37,12 +37,12 @@ class Splas extends Component {
         }}>
         <View>
           <Image
-            source={require('../../Assets/Image.png')}
+            source={require('../../Assets/ApaAja.png')}
             style={{width: 200, height: 200}}
           />
         </View>
         <View>
-          <Text style={{fontSize: 30}}> Si Market </Text>
+          <Text style={{fontSize: 30}}> siSinjang </Text>
         </View>
       </View>
     );

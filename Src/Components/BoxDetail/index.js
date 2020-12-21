@@ -46,4 +46,9 @@ export default StyleSheet.create({
     height: 150,
   },
   textModal: {fontSize: 17, color: 'red'},
+  viewImage: {
+    width: 65,
+    height: 65,
+    borderRadius: 33,
+  },
 });

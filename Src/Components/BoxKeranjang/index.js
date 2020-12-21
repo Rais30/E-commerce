@@ -3,6 +3,7 @@ import {StyleSheet} from 'react-native';
 export default StyleSheet.create({
   viewUtama: {
     flex: 1,
+    height: '100%',
   },
   boxTampildata: {
     // backgroundColor: 'red',
@@ -10,14 +11,13 @@ export default StyleSheet.create({
     height: '100%',
     // flexDirection: 'row',
     flexWrap: 'wrap',
-    flex: 1,
   },
   boksProduk: {
     width: 350,
     height: 230,
     backgroundColor: 'white',
     marginLeft: 20,
-    marginTop: 10,
+    marginVertical: 5,
     elevation: 5,
     borderRadius: 10,
     flexDirection: 'row',
@@ -72,12 +72,12 @@ export default StyleSheet.create({
   },
   header: {
     width: '100%',
-    height: 50,
     backgroundColor: '#1589FF',
     elevation: 5,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 10,
+
+    paddingVertical: 5,
   },
   Tittel: {
     fontWeight: 'bold',

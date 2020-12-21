@@ -46,7 +46,7 @@ export class Kategori extends Component {
         <View style={styles.viewUtama}>
           <View style={styles.header}>
             <Image
-              source={require('../../Assets/Image.png')}
+              source={require('../../Assets/ApaAja.png')}
               style={{width: 35, height: 35, alignSelf: 'center'}}
             />
           </View>

@@ -145,7 +145,7 @@ export class EditProfil extends Component {
                     }}>
                     <Image
                       style={{...styles.Image, width: 60, height: 60}}
-                      source={require('../../Assets/Image.png')}
+                      source={require('../../Assets/ApaAja.png')}
                     />
                     <Text style={{fontSize: 10}}> masukan Foto </Text>
                   </View>

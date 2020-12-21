@@ -76,86 +76,91 @@ class Keranjang extends Component {
         <View style={styles.header}>
           <Text style={styles.Tittel}> Keranjang </Text>
         </View>
-        <ScrollView style={{flex: 1}}>
-          <View>
-            {this.state.token == '' ? (
-              <View style={styles.loginRegister}>
-                <View style={styles.BoxImage}>
-                  <Image
-                    source={require('../../Assets/Image.png')}
-                    style={{width: 70, height: 70}}
-                  />
-                </View>
-                <View style={styles.posisenLogin}>
-                  <View style={styles.boxLoginRegister}>
-                    <Button
-                      title="MASUK"
-                      onPress={() => this.props.navigation.navigate('Login')}
-                    />
-                  </View>
-                  <View style={styles.boxLoginRegister}>
-                    <Button
-                      title="DAFTAR"
-                      onPress={() => this.props.navigation.navigate('Register')}
-                    />
-                  </View>
-                </View>
+
+        {this.state.token == '' ? (
+          <View style={styles.loginRegister}>
+            <View style={styles.BoxImage}>
+              <Image
+                source={require('../../Assets/ApaAja.png')}
+                style={{width: 70, height: 70}}
+              />
+            </View>
+            <View style={styles.posisenLogin}>
+              <View style={styles.boxLoginRegister}>
+                <Button
+                  title="MASUK"
+                  onPress={() => this.props.navigation.navigate('Login')}
+                />
+              </View>
+              <View style={styles.boxLoginRegister}>
+                <Button
+                  title="DAFTAR"
+                  onPress={() => this.props.navigation.navigate('Register')}
+                />
+              </View>
+            </View>
+          </View>
+        ) : (
+          <View style={{flex: 1}}>
+            {this.state.data == null ? (
+              <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                <Text> Data Tidak Tersedia </Text>
+                <Text> Harap Periksa Internet Anda </Text>
               </View>
             ) : (
-              <View>
-                {this.state.data == null ? (
-                  <View
-                    style={{justifyContent: 'center', alignItems: 'center'}}>
-                    <Text> Data Tidak Tersedia </Text>
-                    <Text> Harap Periksa Internet Anda </Text>
-                  </View>
-                ) : (
+              <>
+                <ScrollView style={{flex: 1}}>
                   <View style={styles.boxTampildata}>
-                    {this.state.data.map((val, key) => {
-                      return (
-                        <View key={key} style={styles.boksProduk}>
-                          <TouchableOpacity>
-                            <View style={styles.viewImage}>
-                              <Image
-                                source={{uri: val.gambar}}
-                                style={styles.image}
-                              />
-                            </View>
-                            <View style={styles.viewTeks}>
-                              <Text>{val.nama}</Text>
-                              <Text>{'Rp ' + val.harga}</Text>
-                            </View>
-                            <View style={styles.viewTeks}>
-                              <Text>Jumlah : {val.jumlah_produk}</Text>
-                              <Text>Harga : Rp {val.jumlah_harga_produk}</Text>
-                            </View>
-                            <View style={{flexDirection: 'row'}}>
-                              <TouchableOpacity onPress={() => this.Delete()}>
-                                <Icon name="delete" size={45} />
-                              </TouchableOpacity>
-                              <TouchableOpacity
-                                onPress={() =>
-                                  this.props.navigation.navigate(
-                                    'CheckOut',
-                                    {
-                                      item: val,
-                                    },
-                                    this.keranjang(),
-                                  )
-                                }>
-                                <Icon name="home" size={45} />
-                              </TouchableOpacity>
-                            </View>
-                          </TouchableOpacity>
-                        </View>
-                      );
-                    })}
+                    {this.state.data.map((val, key) => (
+                      <View key={key} style={styles.boksProduk}>
+                        <TouchableOpacity>
+                          <View style={styles.viewImage}>
+                            <Image
+                              source={{uri: val.gambar}}
+                              style={styles.image}
+                            />
+                          </View>
+                          <View style={styles.viewTeks}>
+                            <Text>{val.nama}</Text>
+                            <Text>{'Rp ' + val.harga}</Text>
+                          </View>
+                          <View style={styles.viewTeks}>
+                            <Text>Jumlah : {val.jumlah_produk}</Text>
+                            <Text>Harga : Rp {val.jumlah_harga_produk}</Text>
+                          </View>
+                          <View style={{flexDirection: 'row'}}>
+                            <TouchableOpacity onPress={() => this.Delete()}>
+                              <Icon name="delete" size={45} />
+                            </TouchableOpacity>
+                          </View>
+                        </TouchableOpacity>
+                      </View>
+                    ))}
                   </View>
-                )}
-              </View>
+                </ScrollView>
+                <TouchableOpacity
+                  style={{
+                    width: '100%',
+                    height: 50,
+                    backgroundColor: '#38ACEC',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    bottom: 0,
+                    position: 'absolute',
+                  }}
+                  onPress={() =>
+                    this.props.navigation.navigate(
+                      'CheckOut',
+
+                      this.keranjang(),
+                    )
+                  }>
+                  <Text> Buat Pesanan </Text>
+                </TouchableOpacity>
+              </>
             )}
           </View>
-        </ScrollView>
+        )}
       </View>
     );
   }

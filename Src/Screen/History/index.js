@@ -117,7 +117,7 @@ export class History extends Component {
               <View style={styles.loginRegister}>
                 <View style={styles.BoxImage}>
                   <Image
-                    source={require('../../Assets/Image.png')}
+                    source={require('../../Assets/ApaAja.png')}
                     style={{width: 70, height: 70}}
                   />
                 </View>

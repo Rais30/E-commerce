@@ -76,7 +76,7 @@ export class SignIn extends Component {
               }}>
               <Image
                 style={{width: 70, height: 70, alignSelf: 'center', padding: 5}}
-                source={require('../../Assets/Image.png')}
+                source={require('../../Assets/ApaAja.png')}
               />
             </View>
           </View>

@@ -85,6 +85,9 @@ export class CheckOut extends Component {
   render() {
     return (
       <View>
+        <View style={styles.header}>
+          <Text style={styles.Tittel}> Pesaman </Text>
+        </View>
         {this.state.produk == '' ? (
           <View>
             <ActivityIndicator color="red" size={30} />
@@ -92,20 +95,29 @@ export class CheckOut extends Component {
         ) : (
           <View style={styles.boxTampildata}>
             <View style={styles.boksProduk}>
-              <View>
-                <View style={styles.viewImage}>
-                  <Image
-                    source={{uri: this.props.route.params.item.gambar}}
-                    style={styles.image}
-                  />
+              {this.state.produk.map((val, key) => (
+                <View key={key}>
+                  <View style={styles.boksProduk}>
+                    <View style={styles.viewImage}>
+                      <Image source={{uri: val.gambar}} style={styles.image} />
+                    </View>
+                    <View style={styles.viewTeks}>
+                      <Text>{val.nama}</Text>
+                    </View>
+                    <View>
+                      <Text>{'Rp ' + val.harga}</Text>
+                    </View>
+                    <View>
+                      <Text>{'Jumlah ' + val.jumlah_produk}</Text>
+                    </View>
+                    <View>
+                      <Text>{'Total Harga  ' + val.jumlah_harga}</Text>
+                    </View>
+                  </View>
                 </View>
-                <View style={styles.viewTeks}>
-                  <Text>{this.props.route.params.item.nama}</Text>
-                  <Text>{'Rp ' + this.props.route.params.item.harga}</Text>
-                </View>
-              </View>
+              ))}
             </View>
-            <View>
+            <View style={{bottom: 100, position: 'absolute', width: '100%'}}>
               <View style={{backgroundColor: 'white'}}>
                 <TextInput
                   placeholder="Alamat"
@@ -119,8 +131,6 @@ export class CheckOut extends Component {
                   onChangeText={(text) => this.setState({nomer: text})}
                 />
               </View>
-            </View>
-            <View>
               <Button title="buat pesanan" onPress={() => this.NewPesanan()} />
             </View>
           </View>
@@ -157,6 +167,20 @@ const styles = StyleSheet.create({
   viewTeks: {
     paddingLeft: 7,
     // justifyContent: 'space-around',
+  },
+
+  header: {
+    width: 390,
+    height: 50,
+    backgroundColor: '#1589FF',
+    elevation: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  Tittel: {
+    fontWeight: 'bold',
+    fontSize: 30,
+    color: 'white',
   },
 });
 
